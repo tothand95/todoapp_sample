@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using TodoApp.Bll.Entities;
+using TodoApp.Bll.DbContext.Configuration;
 
 namespace TodoApp.Bll.DbContext
 {
@@ -17,11 +18,12 @@ namespace TodoApp.Bll.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new ApplicationUserConfig());
+            modelBuilder.ApplyConfiguration(new ApplicationUserConfig());
+            modelBuilder.ApplyConfiguration(new TodoConfig());
 
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<Todo> Tenants { get; set; }
+        public virtual DbSet<Todo> Todos { get; set; }
     }
 }

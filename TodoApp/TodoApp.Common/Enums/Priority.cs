@@ -4,7 +4,12 @@ using System.Text;
 
 namespace TodoApp.Common.Enums
 {
-    class Priority
+    public enum Priority : int
     {
+        Lowest = 1,
+        Low = 2,
+        Medium = 3,
+        High = 4,
+        Highest = 5
     }
 }
