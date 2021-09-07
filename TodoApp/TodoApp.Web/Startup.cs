@@ -37,7 +37,7 @@ namespace TodoApp.Web
                     builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
                 });
             });
-            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<ITodoManager, TodoManager>();
             services.AddDbContext<TodoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
 
