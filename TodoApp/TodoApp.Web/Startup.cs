@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using TodoApp.Bll.Entities;
 
 namespace TodoApp.Web
 {
@@ -57,7 +58,7 @@ namespace TodoApp.Web
                     };
                 });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<TodoDbContext>();

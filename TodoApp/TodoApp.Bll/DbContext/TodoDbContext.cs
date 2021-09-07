@@ -21,6 +21,8 @@ namespace TodoApp.Bll.DbContext
             modelBuilder.ApplyConfiguration(new ApplicationUserConfig());
             modelBuilder.ApplyConfiguration(new TodoConfig());
 
+            DbSeed.Seed(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
 
