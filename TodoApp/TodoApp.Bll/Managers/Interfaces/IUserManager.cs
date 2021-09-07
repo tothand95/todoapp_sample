@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TodoApp.Bll.Managers
 {
-    public class UserManager: IUserManager
+    public interface IUserManager
     {
     }
 }
