@@ -55,10 +55,38 @@ namespace TodoApp.Bll.Managers
                     await UserManager.DeleteAsync(user);
                 }
             }
+            else
+                return result;
 
             await DbContext.SaveChangesAsync();
             return result;
         }
 
+        public async Task<IdentityResult> ChangePasswordAsync(string username, string currentPassword, string newPassword)
+        {
+            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
+            var result = await UserManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            return result;
+        }
+
+        public async Task<List<string>> GetRolesForUserAsync(string username)
+        {
+            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
+            var roles = await UserManager.GetRolesAsync(user);
+
+            return roles.ToList();
+        }
+
+        public async Task<bool> HasRoleAsync(string username, string role)
+        {
+            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
+            var roleUserHave = (await UserManager.GetRolesAsync(user)).ToList();
+
+            if (roleUserHave.Any(r => r.ToLower() == role.ToLower()))
+                return true;
+            else
+                return false;
+        }
     }
 }
