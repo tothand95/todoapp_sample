@@ -29,6 +29,12 @@ namespace TodoApp.Bll.Managers
             RoleManager = roleManager;
         }
 
+        /// <summary>
+        /// Log in a user with the given password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task<SignInResult> LoginAsync(string username, string password)
         {
             var signInResult = await SignInManager.PasswordSignInAsync(username, password, true, false);
@@ -36,6 +42,11 @@ namespace TodoApp.Bll.Managers
             return signInResult;
         }
 
+        /// <summary>
+        /// Create a new user with the given data
+        /// </summary>
+        /// <param name="dto">data of the new user</param>
+        /// <returns></returns>
         public async Task<IdentityResult> AddUserAsync(RegisterUserDto dto)
         {
             var user = new ApplicationUser
@@ -62,6 +73,13 @@ namespace TodoApp.Bll.Managers
             return result;
         }
 
+        /// <summary>
+        /// Changes password for the given user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="currentPassword"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
         public async Task<IdentityResult> ChangePasswordAsync(string username, string currentPassword, string newPassword)
         {
             var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
@@ -70,6 +88,11 @@ namespace TodoApp.Bll.Managers
             return result;
         }
 
+        /// <summary>
+        /// Returns all of the roles a user have
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public async Task<List<string>> GetRolesForUserAsync(string username)
         {
             var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
@@ -78,6 +101,12 @@ namespace TodoApp.Bll.Managers
             return roles.ToList();
         }
 
+        /// <summary>
+        /// Checks if a user has a specific role
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public async Task<bool> HasRoleAsync(string username, string role)
         {
             var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
