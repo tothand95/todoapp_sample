@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using TodoApp.Bll.Dtos;
 using TodoApp.Bll.Managers;
+using TodoApp.Common.Helpers;
 
 namespace TodoApp.Web.Controllers
 {
@@ -62,7 +63,7 @@ namespace TodoApp.Web.Controllers
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(new LoginResponseDto { Token = tokenString, NeedNewPassword = DefaultPasswordHelper.GenerateDefaultPasswordForUser(user.Username) == user.Password });
             }
             else
             {
