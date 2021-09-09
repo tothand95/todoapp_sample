@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoAddComponent } from './components/todo-add/todo-add.component';
+import { JwtHelper } from 'angular2-jwt';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { TodoAddComponent } from './components/todo-add/todo-add.component';
       { path: 'todos', component: TodoListComponent },
     ])
   ],
-  providers: [],
+  providers: [JwtHelper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

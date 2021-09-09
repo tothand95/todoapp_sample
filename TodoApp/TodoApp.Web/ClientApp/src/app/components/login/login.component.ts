@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   username: string;
   password: string;
-  errors: any;
+  error: string;
 
   constructor(private router: Router, private http: HttpClient, private loginService: LoginService) {
   }
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   login(form: NgForm) {
     localStorage.removeItem('jwt');
     const credentials = JSON.stringify(form.value);
-    this.http.post('/api/auth/login', credentials, {
+    this.http.post('/api/user/login', credentials, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
       this.loginService.emitLoginStatus();
 
       this.invalidLogin = true;
-      this.errors = err.error;
+      this.error = err.error;
+      console.log(err);
     });
   }
 }

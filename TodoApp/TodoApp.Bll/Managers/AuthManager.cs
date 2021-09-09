@@ -38,7 +38,6 @@ namespace TodoApp.Bll.Managers
         public async Task<SignInResult> LoginAsync(string username, string password)
         {
             var signInResult = await SignInManager.PasswordSignInAsync(username, password, true, false);
-            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
             return signInResult;
         }
 
