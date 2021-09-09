@@ -31,7 +31,7 @@ namespace TodoApp.Web.Controllers
 
 
         [HttpPost, Route("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDto user)
+        public async Task<IActionResult> Login([FromBody] LoginDto user)
         {
             if (user == null)
             {
@@ -72,7 +72,7 @@ namespace TodoApp.Web.Controllers
 
         [Authorize]
         [HttpPost, Route("changepassword")]
-        public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordDto passwordDto)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto passwordDto)
         {
             var result = await AuthManager.ChangePasswordAsync(HttpContext.User.Identity.Name, passwordDto.CurrentPassword, passwordDto.NewPassword);
 
@@ -84,10 +84,25 @@ namespace TodoApp.Web.Controllers
 
         [Authorize]
         [HttpGet, Route("roleforuser")]
-        public async Task<IActionResult> GetRoleForUserAsync()
+        public async Task<IActionResult> GetRoleForUser()
         {
             var roles = await AuthManager.GetRolesForUserAsync(HttpContext.User.Identity.Name);
             return Ok(roles);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost, Route("registeremployee")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
+        {
+            if (user == null)
+                return BadRequest("Request can't be completed. Internal server error.");
+
+            var result = await AuthManager.AddUserAsync(user);
+
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest(result.Errors.Select(e => e.Description).ToList());
         }
     }
 }
