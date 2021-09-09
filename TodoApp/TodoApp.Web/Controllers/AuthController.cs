@@ -42,7 +42,7 @@ namespace TodoApp.Web.Controllers
 
             if (response.Succeeded)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")); //TODO get from somewhere, maxbe Azure KeyVault
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var roles = await AuthManager.GetRolesForUserAsync(user.Username);
 
@@ -54,8 +54,8 @@ namespace TodoApp.Web.Controllers
                     claimList.Add(new Claim(ClaimTypes.Role, role));
 
                 var tokenOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:44353",
-                    audience: "http://localhost:44353",
+                    issuer: "http://localhost:44353", //TODO get from config
+                    audience: "http://localhost:44353", //TODO get from config
                     claims: claimList,
                     expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials
