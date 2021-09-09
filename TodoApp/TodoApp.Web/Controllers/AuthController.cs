@@ -83,8 +83,8 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize]
-        [HttpGet, Route("roleforuser")]
-        public async Task<IActionResult> GetRoleForUser()
+        [HttpGet, Route("rolesforuser")]
+        public async Task<IActionResult> GetRolesForUser()
         {
             var roles = await AuthManager.GetRolesForUserAsync(HttpContext.User.Identity.Name);
             return Ok(roles);
