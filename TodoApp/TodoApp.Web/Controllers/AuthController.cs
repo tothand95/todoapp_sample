@@ -91,7 +91,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost, Route("registeremployee")]
+        [HttpPost, Route("registeruser")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
         {
             if (user == null)
