@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -67,6 +68,18 @@ namespace TodoApp.Web.Controllers
             {
                 return BadRequest("Login failed. Invalid username or password.");
             }
+        }
+
+        [Authorize]
+        [HttpPost, Route("changepassword")]
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordDto passwordDto)
+        {
+            var result = await AuthManager.ChangePasswordAsync(HttpContext.User.Identity.Name, passwordDto.CurrentPassword, passwordDto.NewPassword);
+
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest(result.Errors.Select(e => e.Description).ToList());
         }
     }
 }
