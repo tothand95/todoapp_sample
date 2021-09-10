@@ -12,7 +12,7 @@ namespace TodoApp.Bll.Entities
         public string UserId { get; set; }
         public string Description { get; set; }
         public DateTime? Deadline { get; set; }
-        public Priority Priority { get; set; }
+        public TodoPriority Priority { get; set; }
 
         public ApplicationUser User { get; set; }
     }
