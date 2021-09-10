@@ -26,7 +26,7 @@ namespace TodoApp.Bll.DbContext
 
             var hasher = new PasswordHasher<IdentityUser>();
             var adminUser = new ApplicationUser(_adminUserName);
-            adminUser.PasswordHash = hasher.HashPassword(null, "Password01");
+            adminUser.PasswordHash = hasher.HashPassword(adminUser, "Password01");
 
             modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
 

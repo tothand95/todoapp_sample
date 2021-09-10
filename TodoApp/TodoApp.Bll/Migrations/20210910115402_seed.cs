@@ -9,22 +9,22 @@ namespace TodoApp.Bll.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "33fd90c8-5902-4c9b-8e29-bbd634709777", "0b917915-3a30-46c9-9a8e-44688ee32e7f", "Admin", null });
+                values: new object[] { "88f38ed3-a06c-4abc-9887-ec95d43452ee", "d10e99b1-85e8-4ce6-821a-4560a18d3c54", "Admin", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "eafa49c3-edaf-4985-aa36-03dd3a73ebbe", "29ea4ee3-c32d-4b03-9c57-bdbebef4f1b1", "User", null });
+                values: new object[] { "289ec51e-2292-491c-a3a6-6c59b5ac9396", "926d76dc-f913-43d6-924f-0cc87cfc63bc", "User", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePicture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "56186f3e-b359-4484-9a9f-4da36afc9e09", 0, "a44cb7a4-9571-41f0-99a0-4a7231b12abe", null, false, false, null, null, null, "AQAAAAEAACcQAAAAEFAO039H6ONoHiuHDZX/PWjO36SmQUA45jgCOQ/y0Rzw+YbtCf9tT92ftl5AQEsKxw==", null, false, null, "df12a013-c04b-4110-80cc-85510d067dbb", false, "Admin" });
+                values: new object[] { "07ab9ded-9390-44ef-8da6-ae2dc6c22b86", 0, "ac80633e-9f91-4478-91c7-85ccc0c7b300", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEBY+kiASOK5mvVL6hTfchK6gSdqDdiqrm/aLX6EJLAar1Ha6o7IsbapdqBwJzF5ZZA==", null, false, null, "64c71dd8-a883-4033-8e26-6ebd9a2ff53d", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "56186f3e-b359-4484-9a9f-4da36afc9e09", "33fd90c8-5902-4c9b-8e29-bbd634709777" });
+                values: new object[] { "07ab9ded-9390-44ef-8da6-ae2dc6c22b86", "88f38ed3-a06c-4abc-9887-ec95d43452ee" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -32,22 +32,22 @@ namespace TodoApp.Bll.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "eafa49c3-edaf-4985-aa36-03dd3a73ebbe");
+                keyValue: "289ec51e-2292-491c-a3a6-6c59b5ac9396");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "UserId", "RoleId" },
-                keyValues: new object[] { "56186f3e-b359-4484-9a9f-4da36afc9e09", "33fd90c8-5902-4c9b-8e29-bbd634709777" });
+                keyValues: new object[] { "07ab9ded-9390-44ef-8da6-ae2dc6c22b86", "88f38ed3-a06c-4abc-9887-ec95d43452ee" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "33fd90c8-5902-4c9b-8e29-bbd634709777");
+                keyValue: "88f38ed3-a06c-4abc-9887-ec95d43452ee");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "56186f3e-b359-4484-9a9f-4da36afc9e09");
+                keyValue: "07ab9ded-9390-44ef-8da6-ae2dc6c22b86");
         }
     }
 }

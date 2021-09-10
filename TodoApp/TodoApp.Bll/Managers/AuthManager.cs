@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using TodoApp.Bll.DbContext;
 using TodoApp.Bll.Dtos;
 using TodoApp.Bll.Entities;
+using TodoApp.Common.Exceptions;
+using TodoApp.Common.Validation;
 
 namespace TodoApp.Bll.Managers
 {
@@ -38,7 +40,6 @@ namespace TodoApp.Bll.Managers
         public async Task<SignInResult> LoginAsync(string username, string password)
         {
             var signInResult = await SignInManager.PasswordSignInAsync(username, password, true, false);
-            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
             return signInResult;
         }
 
@@ -60,10 +61,16 @@ namespace TodoApp.Bll.Managers
 
             if (result.Succeeded)
             {
-                var roleAssignResult = await UserManager.AddToRoleAsync(user, "User");
-                if (!roleAssignResult.Succeeded)
+                try
+                {
+                    var roleAssignResult = await UserManager.AddToRoleAsync(user, "User");
+                    if (!roleAssignResult.Succeeded)
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Registration failed." } });
+                }
+                catch (Exception e)
                 {
                     await UserManager.DeleteAsync(user);
+                    throw e;
                 }
             }
             else
