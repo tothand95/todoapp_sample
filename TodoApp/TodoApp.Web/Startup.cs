@@ -43,21 +43,22 @@ namespace TodoApp.Web
             services.AddScoped<ITodoManager, TodoManager>();
             services.AddDbContext<TodoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-
-                        ValidIssuer = "http://localhost:44353",
-                        ValidAudience = "http://localhost:44353",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TodoAppKEy$&@12333"))
-                    };
-                });
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LongbowKey&360")),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = "http://localhost:44353",
+                    ValidAudience = "http://localhost:44353"
+                };
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -120,8 +121,8 @@ namespace TodoApp.Web
             }
 
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

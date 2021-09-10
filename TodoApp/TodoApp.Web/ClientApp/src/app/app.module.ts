@@ -15,6 +15,7 @@ import { TodoAddComponent } from './components/todo-add/todo-add.component';
 import { JwtHelper } from 'angular2-jwt';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TodoCardComponent } from './components/todo-card/todo-card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     ChangePasswordComponent,
     TodoListComponent,
-    TodoAddComponent
+    TodoAddComponent,
+    TodoCardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

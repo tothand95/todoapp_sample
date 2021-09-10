@@ -47,9 +47,11 @@ export class AuthService {
   }
 
   public setUserRole() {
+    const token = localStorage.getItem('jwt');
     if (this.isLoggedIn()) {
       this.http.get('/api/user/rolesforuser', {
         headers: new HttpHeaders({
+          'Authorization': token,
           'Content-Type': 'application/json'
         })
       }).subscribe(response => {

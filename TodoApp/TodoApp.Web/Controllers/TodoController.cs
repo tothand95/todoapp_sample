@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -35,9 +36,18 @@ namespace TodoApp.Web.Controllers
 
         [Authorize]
         [HttpGet, Route("getfromuserid/{userId}")]
-        public async Task<IActionResult> GetTodoFromUserId(string userId, bool includeArchieved)
+        public async Task<IActionResult> GetTodosForUser(string userId, bool includeArchieved)
         {
             var result = await TodoManager.ListTodoForUserAsync(userId, includeArchieved);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet, Route("getforcurrentuser")]
+        public async Task<IActionResult> GetTodosForCurrentUser()
+        {
+            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), true);
             return Ok(result);
         }
 
