@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         if (response.needNewPassword === true) {
           this.router.navigate(['/changepassword']);
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/todos']);
         }
       }, err => {
         this.authService.emitLoginStatus();
