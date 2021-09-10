@@ -1,15 +1,41 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
+import { Observable } from 'rxjs/internal/Observable';
+import { LoginResponse } from 'src/model/login-response';
+import { RegisterRequest } from 'src/model/register-request';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
   @Output() changeLoginStatus: EventEmitter<boolean> = new EventEmitter();
   @Output() changeUserRole: EventEmitter<string> = new EventEmitter();
 
   constructor(private jwtHelper: JwtHelper, private http: HttpClient) { }
+
+  public login(credentialsJson: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>('/api/user/login', credentialsJson, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public logout() {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('role');
+
+    this.emitLoginStatus();
+  }
+
+  public register(requestData: RegisterRequest): Observable<void> {
+    return this.http.post<void>('/api/user/register', JSON.stringify(requestData), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 
   public emitLoginStatus() {
     const token = localStorage.getItem('jwt');
@@ -21,7 +47,7 @@ export class LoginService {
   }
 
   public setUserRole() {
-    this.http.get('/api/auth/roleforuser', {
+    this.http.get('/api/user/rolesforuser', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
