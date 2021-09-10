@@ -10,7 +10,7 @@ import { RegisterRequest } from 'src/model/register-request';
 export class RegisterComponent implements OnInit {
   formData: RegisterRequest;
   passwordConfirm: string;
-  errors: string[];
+  errors: string[] = [];
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -20,10 +20,11 @@ export class RegisterComponent implements OnInit {
   }
 
   public register() {
+    this.errors.length = 0;
     if (this.formData.password === this.passwordConfirm) {
       this.authService.register(this.formData)
         .subscribe(response => {
-
+          // TODO login and redirect
         }, err => {
           console.log(err);
           this.errors.length = 0;
