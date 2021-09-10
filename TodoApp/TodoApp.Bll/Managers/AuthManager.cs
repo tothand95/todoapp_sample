@@ -124,5 +124,15 @@ namespace TodoApp.Bll.Managers
             else
                 return false;
         }
+
+        /// <summary>
+        /// List all of the users in the application
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ApplicationUser>> ListUsersAsync()
+        {
+            var users = await DbContext.Users.ToListAsync();
+            return users;
+        }
     }
 }

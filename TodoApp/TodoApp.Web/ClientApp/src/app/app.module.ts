@@ -16,6 +16,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoCardComponent } from './components/todo-card/todo-card.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
     ChangePasswordComponent,
     TodoListComponent,
     TodoAddComponent,
-    TodoCardComponent
+    TodoCardComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +43,7 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
       { path: 'register', component: RegisterComponent },
       { path: 'change-password', component: ChangePasswordComponent },
       { path: 'todos', component: TodoListComponent },
+      { path: 'users', component: UserListComponent },
     ])
   ],
   providers: [JwtHelper],

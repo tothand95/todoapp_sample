@@ -1,0 +1,7 @@
+<p>user list works</p>
+
+<div class="todo-container">
+    <div *ngFor="let user of users" (click)="showTodosForUser()">
+        {{user.userName}} - {{user.email}}
+    </div>
+</div>

@@ -91,6 +91,14 @@ namespace TodoApp.Web.Controllers
             return Ok(roles);
         }
 
+        [Authorize]
+        [HttpGet, Route("listusers")]
+        public async Task<IActionResult> ListUsers()
+        {
+            var users = await AuthManager.ListUsersAsync();
+            return Ok(users);
+        }
+
         [HttpPost, Route("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
         {

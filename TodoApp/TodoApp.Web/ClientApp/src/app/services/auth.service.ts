@@ -63,6 +63,16 @@ export class AuthService {
     }
   }
 
+  public listUsers(): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.get<any>('/api/user/listusers/', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public isLoggedIn(): boolean {
     const token = localStorage.getItem('jwt');
     return (token !== null && !this.jwtHelper.isTokenExpired(token));
