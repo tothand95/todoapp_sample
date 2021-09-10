@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,29 +56,35 @@ namespace TodoApp.Bll.Managers
         /// Update status of the todo entity
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateTodoStatus(int id, TodoStatus status)
+        public async Task UpdateTodoStatusAsync(int id, TodoStatus status)
         {
-
+            var result = DbContext.Todos
+                .SingleOrDefault(t => t.Id == id);
+            result.Status = status;
+            await DbContext.SaveChangesAsync();
         }
 
         /// <summary>
         /// Update priority of the todo entity
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateTodoPriority(int id, TodoPriority priority)
-        {
-
-        }
-
-        /// <summary>
-        /// Get todo entity with the given id
-        /// </summary>
-        /// <param name="id"></param>
-        public Todo GetTodo(int id)
+        public async Task UpdateTodoPriorityAsync(int id, TodoPriority priority)
         {
             var result = DbContext.Todos
+               .SingleOrDefault(t => t.Id == id);
+            result.Priority = priority;
+            await DbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Get todo entity with the given id
+        /// </summary>
+        /// <param name="id"></param>
+        public async Task<Todo> GetTodoAsync(int id)
+        {
+            var result = await DbContext.Todos
                 .Include(t => t.User)
-                .SingleOrDefault(t => t.Id == id);
+                .SingleOrDefaultAsync(t => t.Id == id);
             return result;
         }
 
@@ -85,12 +92,12 @@ namespace TodoApp.Bll.Managers
         /// Get todo entity with the given id
         /// </summary>
         /// <param name="id"></param>
-        public List<Todo> ListTodoForUser(string userId)
+        public async Task<List<Todo>> ListTodoForUserAsync(string userId)
         {
-            var result = DbContext.Users
+            var result = await DbContext.Users
                 .Include(t => t.Todos)
-                .SingleOrDefault(t => t.Id == userId);
-            return result;
+                .SingleOrDefaultAsync(t => t.Id == userId);
+            return result.Todos;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 using TodoApp.Bll.Dtos;
 using TodoApp.Bll.Entities;
@@ -13,10 +14,9 @@ namespace TodoApp.Bll.Managers
         void CreateTodo(TodoDto dto);
         void DeleteTodo(int id);
         void UpdateTodo(TodoDto dto);
-        void UpdateTodoStatus(int id, TodoStatus status);
-        void UpdateTodoPriority(int id, TodoPriority priority);
-        Todo GetTodo(int id);
-        List<Todo> ListTodoForUser(string userId);
-
+        Task UpdateTodoStatusAsync(int id, TodoStatus status);
+        Task UpdateTodoPriorityAsync(int id, TodoPriority priority);
+        Task<Todo> GetTodoAsync(int id);
+        Task<List<Todo>> ListTodoForUserAsync(string userId);
     }
 }
