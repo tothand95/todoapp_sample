@@ -1,7 +1,26 @@
-<p>user list works</p>
+<ng-template #addUserModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Assignment was successful.</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close()">Add user</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancel</button>
+    </div>
+</ng-template>
 
+<ng-template #showTodosModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Show todos</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close()">Exit</button>
+    </div>
+</ng-template>
+
+<p>user list works</p>
+<button class="btn btn-primary" (click)="addUser(addUserModal)">Add user</button>
 <div class="todo-container">
-    <div *ngFor="let user of users" (click)="showTodosForUser()">
+    <div class="pointer-cursor" *ngFor="let user of users" (click)="showTodosForUser(showTodosModal)">
         {{user.userName}} - {{user.email}}
     </div>
 </div>

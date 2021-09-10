@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserModel } from 'src/model/user-model';
 
@@ -10,7 +11,7 @@ import { UserModel } from 'src/model/user-model';
 export class UserListComponent implements OnInit {
   users: UserModel[];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.users = [];
@@ -23,7 +24,17 @@ export class UserListComponent implements OnInit {
 
   }
 
-  public showTodosForUser() {
+  public showTodosForUser(modalContent) {
+    this.openModal(modalContent);
+  }
 
+  public addUser(modalContent) {
+    this.openModal(modalContent);
+  }
+
+  private openModal(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    }, (reason) => {
+    });
   }
 }

@@ -17,6 +17,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
     FormsModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
+    NgbModalModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
