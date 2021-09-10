@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20210908104236_seed.Designer.cs" />
     <Compile Remove="Migrations\20210910105314_seed.cs" />
     <Compile Remove="Migrations\20210910105314_seed.Designer.cs" />
+    <Compile Remove="Migrations\20210910144617_todo-softdelete.cs" />
+    <Compile Remove="Migrations\20210910144617_todo-softdelete.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

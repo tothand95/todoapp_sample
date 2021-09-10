@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoApp.Bll.DbContext;
 
 namespace TodoApp.Bll.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    partial class TodoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210910144816_todo-softdelete")]
+    partial class todosoftdelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +50,14 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34632de4-749d-4a3c-b74e-a19c64152d3f",
-                            ConcurrencyStamp = "815bd197-2dc8-41a7-ad3f-e6bf7ccdb6cc",
+                            Id = "708a7d1a-03fe-49bd-b7ed-ef929d0787b3",
+                            ConcurrencyStamp = "852333ff-180e-49c9-93ac-ad50c09a93a9",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "f6287b00-42c0-4b2c-8c85-746011d8817c",
-                            ConcurrencyStamp = "47d687b9-9222-471b-b0cc-aac400f4e2f7",
+                            Id = "31f757ff-bacb-42ad-a38c-607050d33642",
+                            ConcurrencyStamp = "fba53f62-ab8e-43a9-9002-74fc9a42918c",
                             Name = "User"
                         });
                 });
@@ -147,8 +149,8 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "beb27016-6cf6-4fcc-a38c-480f52b99cfa",
-                            RoleId = "34632de4-749d-4a3c-b74e-a19c64152d3f"
+                            UserId = "8b1176a1-ab02-449d-a8fc-e629d83a0aa5",
+                            RoleId = "708a7d1a-03fe-49bd-b7ed-ef929d0787b3"
                         });
                 });
 
@@ -241,15 +243,15 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "beb27016-6cf6-4fcc-a38c-480f52b99cfa",
+                            Id = "8b1176a1-ab02-449d-a8fc-e629d83a0aa5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "77579e7b-1f1b-43c6-a5e7-f4b0dd4a9827",
+                            ConcurrencyStamp = "01be6720-17f1-441a-8b86-7bcbef5406b2",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJX2DbWpJqlFyw50dAYlQYasZOGBIsAivKJe9F4RFk1m8sBJzGQUHirXbYkOk9Ynvw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDaqfjbf4kC+5gxVK28kfpqkt6LHmxT/8j1+lMJxHZQvERXFNG8NYn1ByhLGpmPbzQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d5c5a097-78e0-49e2-b078-f14bf0c40b96",
+                            SecurityStamp = "f879d508-af2a-48d8-b65e-aaf8ff22535b",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -277,9 +279,6 @@ namespace TodoApp.Bll.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

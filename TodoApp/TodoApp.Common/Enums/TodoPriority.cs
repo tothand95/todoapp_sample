@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TodoApp.Common.Enums
 {
-    public enum Priority : int
+    public enum TodoPriority : int
     {
         Lowest = 1,
         Low = 2,
