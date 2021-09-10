@@ -11,6 +11,6 @@ namespace TodoApp.Common.Enums
         InProgress = 2,
         Done = 3,
         Blocked = 4,
-        WontDo = 4,
+        WontDo = 5
     }
 }
