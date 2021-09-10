@@ -60,7 +60,11 @@ namespace TodoApp.Bll.Managers
         public async Task DeleteTodoAsync(int id)
         {
             var entity = await DbContext.Todos.SingleOrDefaultAsync(t => t.Id == id);
+            if (entity == null)
+                throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "Todo", Message = "Todo does not exist with the requested id", Type = ValidationMessageType.Error } });
+            
             entity.Deleted = true;
+            
             await DbContext.SaveChangesAsync();
         }
 
@@ -88,6 +92,9 @@ namespace TodoApp.Bll.Managers
         public async Task UpdateTodoStatusAsync(int id, TodoStatus status)
         {
             var entity = DbContext.Todos.SingleOrDefault(t => t.Id == id);
+            if (entity == null)
+                throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "Todo", Message = "Todo does not exist with the requested id", Type = ValidationMessageType.Error } });
+            
             entity.Status = status;
             await DbContext.SaveChangesAsync();
         }
@@ -99,6 +106,9 @@ namespace TodoApp.Bll.Managers
         public async Task UpdateTodoPriorityAsync(int id, TodoPriority priority)
         {
             var entity = DbContext.Todos.SingleOrDefault(t => t.Id == id);
+            if (entity == null)
+                throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "Todo", Message = "Todo does not exist with the requested id", Type = ValidationMessageType.Error } });
+
             entity.Priority = priority;
             await DbContext.SaveChangesAsync();
         }
@@ -112,6 +122,9 @@ namespace TodoApp.Bll.Managers
             var entity = await DbContext.Todos
                 .Include(t => t.User)
                 .SingleOrDefaultAsync(t => t.Id == id);
+            if (entity == null)
+                throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "Todo", Message = "Todo does not exist with the requested id", Type = ValidationMessageType.Error } });
+
             return entity;
         }
 
