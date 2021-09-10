@@ -15,6 +15,8 @@ namespace TodoApp.Bll.Entities
         public TodoPriority Priority { get; set; }
         public TodoStatus Status { get; set; }
 
+        public bool Deleted { get; set; }
+
         public ApplicationUser User { get; set; }
     }
 }

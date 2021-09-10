@@ -38,18 +38,20 @@ namespace TodoApp.Bll.Managers
         /// Delete todo entity with the given id
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteTodo(int id)
+        public async Task DeleteTodoAsync(int id)
         {
-
+            var entity = await DbContext.Todos.SingleOrDefaultAsync(t => t.Id == id);
+            entity.Deleted = true;
+            await DbContext.SaveChangesAsync();
         }
 
         /// <summary>
         /// Update basic data of the todo entity
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateTodo(TodoDto dto)
+        public async Task UpdateTodoAsync(TodoDto dto)
         {
-
+            await DbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -58,9 +60,8 @@ namespace TodoApp.Bll.Managers
         /// <param name="id"></param>
         public async Task UpdateTodoStatusAsync(int id, TodoStatus status)
         {
-            var result = DbContext.Todos
-                .SingleOrDefault(t => t.Id == id);
-            result.Status = status;
+            var entity = DbContext.Todos.SingleOrDefault(t => t.Id == id);
+            entity.Status = status;
             await DbContext.SaveChangesAsync();
         }
 
@@ -70,9 +71,8 @@ namespace TodoApp.Bll.Managers
         /// <param name="id"></param>
         public async Task UpdateTodoPriorityAsync(int id, TodoPriority priority)
         {
-            var result = DbContext.Todos
-               .SingleOrDefault(t => t.Id == id);
-            result.Priority = priority;
+            var entity = DbContext.Todos.SingleOrDefault(t => t.Id == id);
+            entity.Priority = priority;
             await DbContext.SaveChangesAsync();
         }
 
@@ -82,22 +82,22 @@ namespace TodoApp.Bll.Managers
         /// <param name="id"></param>
         public async Task<Todo> GetTodoAsync(int id)
         {
-            var result = await DbContext.Todos
+            var entity = await DbContext.Todos
                 .Include(t => t.User)
                 .SingleOrDefaultAsync(t => t.Id == id);
-            return result;
+            return entity;
         }
 
         /// <summary>
         /// Get todo entity with the given id
         /// </summary>
         /// <param name="id"></param>
-        public async Task<List<Todo>> ListTodoForUserAsync(string userId)
+        public async Task<List<Todo>> ListTodoForUserAsync(string userId, bool includeArchieved)
         {
-            var result = await DbContext.Users
-                .Include(t => t.Todos)
-                .SingleOrDefaultAsync(t => t.Id == userId);
-            return result.Todos;
+            var result = await DbContext.Todos
+                .Where(t => t.UserId == userId && (t.Deleted == false || t.Deleted == includeArchieved))
+                .ToListAsync();
+            return result;
         }
     }
 }

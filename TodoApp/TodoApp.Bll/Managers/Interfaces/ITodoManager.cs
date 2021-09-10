@@ -12,8 +12,8 @@ namespace TodoApp.Bll.Managers
     public interface ITodoManager
     {
         void CreateTodo(TodoDto dto);
-        void DeleteTodo(int id);
-        void UpdateTodo(TodoDto dto);
+        Task DeleteTodoAsync(int id);
+        Task UpdateTodoAsync(TodoDto dto);
         Task UpdateTodoStatusAsync(int id, TodoStatus status);
         Task UpdateTodoPriorityAsync(int id, TodoPriority priority);
         Task<Todo> GetTodoAsync(int id);
