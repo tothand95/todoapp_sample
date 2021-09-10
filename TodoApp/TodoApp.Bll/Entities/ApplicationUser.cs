@@ -9,7 +9,9 @@ namespace TodoApp.Bll.Entities
     public class ApplicationUser : IdentityUser
     {
         public ApplicationUser() { }
-        public ApplicationUser(string username) : base(username) { }
+        public ApplicationUser(string username) : base(username) {
+            NormalizedUserName = username.ToUpper();
+        }
 
         public byte[] ProfilePicture { get; set; }
 
