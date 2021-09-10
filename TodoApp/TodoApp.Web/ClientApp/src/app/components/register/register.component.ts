@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.formData = new RegisterRequest();
     this.passwordConfirm = '';
+    this.errors = [];
   }
 
   public register() {
@@ -24,7 +25,13 @@ export class RegisterComponent implements OnInit {
         .subscribe(response => {
 
         }, err => {
-          this.errors = err.error;
+          console.log(err);
+          this.errors.length = 0;
+          if (typeof (err.error) === 'string') {
+            this.errors.push(err.error);
+          } else {
+            this.errors.push(...err.error);
+          }
         });
     }
   }
