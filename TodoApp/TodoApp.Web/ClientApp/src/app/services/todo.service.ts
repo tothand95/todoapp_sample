@@ -14,7 +14,7 @@ export class TodoService {
     const token = localStorage.getItem('jwt');
     return this.http.get<any>('/api/todo/getfromid/' + id, {
       headers: new HttpHeaders({
-        'Authorization': token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       })
     });
@@ -24,7 +24,7 @@ export class TodoService {
     const token = localStorage.getItem('jwt');
     return this.http.get<any>('/api/todo/getfromuserid/' + userid, {
       headers: new HttpHeaders({
-        'Authorization': token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       })
     });
@@ -36,7 +36,7 @@ export class TodoService {
     console.log(token);
     return this.http.get<any>('/api/todo/getforcurrentuser', {
       headers: new HttpHeaders({
-        'Authorization': token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       })
     });
@@ -56,7 +56,7 @@ export class TodoService {
     const token = localStorage.getItem('jwt');
     return this.http.post<any>('/api/todo/create', JSON.stringify(dto), {
       headers: new HttpHeaders({
-        'Authorization': token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       })
     });

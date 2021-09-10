@@ -51,7 +51,7 @@ export class AuthService {
     if (this.isLoggedIn()) {
       this.http.get('/api/user/rolesforuser', {
         headers: new HttpHeaders({
-          'Authorization': token,
+          'Authorization': 'Bearer ' + token,
           'Content-Type': 'application/json'
         })
       }).subscribe(response => {
