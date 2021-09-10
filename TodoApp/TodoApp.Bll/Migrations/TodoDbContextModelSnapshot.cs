@@ -48,15 +48,17 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34632de4-749d-4a3c-b74e-a19c64152d3f",
-                            ConcurrencyStamp = "815bd197-2dc8-41a7-ad3f-e6bf7ccdb6cc",
-                            Name = "Admin"
+                            Id = "3e06a95f-bea6-4721-a545-b4d7c09a9384",
+                            ConcurrencyStamp = "2aee6dd1-6f55-44a3-b251-21f85d2117dd",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f6287b00-42c0-4b2c-8c85-746011d8817c",
-                            ConcurrencyStamp = "47d687b9-9222-471b-b0cc-aac400f4e2f7",
-                            Name = "User"
+                            Id = "00029f18-3e81-42cb-a72b-fdd194c806cd",
+                            ConcurrencyStamp = "302c9218-2ebe-4542-9797-16d1ad8a792a",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -147,8 +149,8 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "beb27016-6cf6-4fcc-a38c-480f52b99cfa",
-                            RoleId = "34632de4-749d-4a3c-b74e-a19c64152d3f"
+                            UserId = "dd0ca997-f546-427c-a5da-2d8155226134",
+                            RoleId = "3e06a95f-bea6-4721-a545-b4d7c09a9384"
                         });
                 });
 
@@ -241,15 +243,15 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "beb27016-6cf6-4fcc-a38c-480f52b99cfa",
+                            Id = "dd0ca997-f546-427c-a5da-2d8155226134",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "77579e7b-1f1b-43c6-a5e7-f4b0dd4a9827",
+                            ConcurrencyStamp = "cbd62af8-55e8-4eef-8ffb-787f8cc6747d",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJX2DbWpJqlFyw50dAYlQYasZOGBIsAivKJe9F4RFk1m8sBJzGQUHirXbYkOk9Ynvw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJH89s18RxfJ2kT4kPPWJB0JhnhRysA6ggwSE0pAWs2tU9DBIYSM+ZZfrtF6VHCXhA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d5c5a097-78e0-49e2-b078-f14bf0c40b96",
+                            SecurityStamp = "e96ffc99-ab7a-4b49-85e8-00e281021246",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
