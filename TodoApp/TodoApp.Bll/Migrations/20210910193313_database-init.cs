@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TodoApp.Bll.Migrations
 {
-    public partial class Init : Migration
+    public partial class databaseinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,9 +160,12 @@ namespace TodoApp.Bll.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: false),
                     Deadline = table.Column<DateTime>(nullable: true),
-                    Priority = table.Column<int>(nullable: false)
+                    Priority = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,6 +177,26 @@ namespace TodoApp.Bll.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "3e06a95f-bea6-4721-a545-b4d7c09a9384", "2aee6dd1-6f55-44a3-b251-21f85d2117dd", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "00029f18-3e81-42cb-a72b-fdd194c806cd", "302c9218-2ebe-4542-9797-16d1ad8a792a", "User", "USER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePicture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "dd0ca997-f546-427c-a5da-2d8155226134", 0, "cbd62af8-55e8-4eef-8ffb-787f8cc6747d", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEJH89s18RxfJ2kT4kPPWJB0JhnhRysA6ggwSE0pAWs2tU9DBIYSM+ZZfrtF6VHCXhA==", null, false, null, "e96ffc99-ab7a-4b49-85e8-00e281021246", false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "dd0ca997-f546-427c-a5da-2d8155226134", "3e06a95f-bea6-4721-a545-b4d7c09a9384" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

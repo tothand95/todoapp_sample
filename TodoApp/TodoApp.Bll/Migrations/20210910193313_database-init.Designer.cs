@@ -10,8 +10,8 @@ using TodoApp.Bll.DbContext;
 namespace TodoApp.Bll.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20210910115402_seed")]
-    partial class seed
+    [Migration("20210910193313_database-init")]
+    partial class databaseinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,17 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "88f38ed3-a06c-4abc-9887-ec95d43452ee",
-                            ConcurrencyStamp = "d10e99b1-85e8-4ce6-821a-4560a18d3c54",
-                            Name = "Admin"
+                            Id = "3e06a95f-bea6-4721-a545-b4d7c09a9384",
+                            ConcurrencyStamp = "2aee6dd1-6f55-44a3-b251-21f85d2117dd",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "289ec51e-2292-491c-a3a6-6c59b5ac9396",
-                            ConcurrencyStamp = "926d76dc-f913-43d6-924f-0cc87cfc63bc",
-                            Name = "User"
+                            Id = "00029f18-3e81-42cb-a72b-fdd194c806cd",
+                            ConcurrencyStamp = "302c9218-2ebe-4542-9797-16d1ad8a792a",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -149,8 +151,8 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "07ab9ded-9390-44ef-8da6-ae2dc6c22b86",
-                            RoleId = "88f38ed3-a06c-4abc-9887-ec95d43452ee"
+                            UserId = "dd0ca997-f546-427c-a5da-2d8155226134",
+                            RoleId = "3e06a95f-bea6-4721-a545-b4d7c09a9384"
                         });
                 });
 
@@ -243,15 +245,15 @@ namespace TodoApp.Bll.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07ab9ded-9390-44ef-8da6-ae2dc6c22b86",
+                            Id = "dd0ca997-f546-427c-a5da-2d8155226134",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac80633e-9f91-4478-91c7-85ccc0c7b300",
+                            ConcurrencyStamp = "cbd62af8-55e8-4eef-8ffb-787f8cc6747d",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBY+kiASOK5mvVL6hTfchK6gSdqDdiqrm/aLX6EJLAar1Ha6o7IsbapdqBwJzF5ZZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJH89s18RxfJ2kT4kPPWJB0JhnhRysA6ggwSE0pAWs2tU9DBIYSM+ZZfrtF6VHCXhA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64c71dd8-a883-4033-8e26-6ebd9a2ff53d",
+                            SecurityStamp = "e96ffc99-ab7a-4b49-85e8-00e281021246",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -267,12 +269,21 @@ namespace TodoApp.Bll.Migrations
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

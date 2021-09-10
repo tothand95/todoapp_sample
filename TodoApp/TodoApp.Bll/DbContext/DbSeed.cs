@@ -18,8 +18,8 @@ namespace TodoApp.Bll.DbContext
 
         public static void Seed(ModelBuilder modelBuilder)
         {
-            IdentityRole adminRole = new IdentityRole(_adminRoleName);
-            IdentityRole userRole = new IdentityRole(_userRoleName);
+            IdentityRole adminRole = new IdentityRole() { Name = _adminRoleName,  NormalizedName = _adminRoleName.ToUpper() };
+            IdentityRole userRole = new IdentityRole() { Name = _userRoleName, NormalizedName = _userRoleName.ToUpper() };
 
             modelBuilder.Entity<IdentityRole>().HasData(adminRole);
             modelBuilder.Entity<IdentityRole>().HasData(userRole);
