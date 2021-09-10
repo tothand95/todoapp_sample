@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('jwt', token);
 
         this.authService.emitLoginStatus();
-        this.authService.setUserRole();
 
         this.invalidLogin = false;
 

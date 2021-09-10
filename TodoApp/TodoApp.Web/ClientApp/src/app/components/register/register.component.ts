@@ -15,14 +15,17 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.formData = new RegisterRequest();
+    this.passwordConfirm = '';
   }
 
   public register() {
-    this.authService.register(this.formData)
-      .subscribe(response => {
+    if (this.formData.password === this.passwordConfirm) {
+      this.authService.register(this.formData)
+        .subscribe(response => {
 
-      }, err => {
-        this.errors = err.error;
-      });
+        }, err => {
+          this.errors = err.error;
+        });
+    }
   }
 }

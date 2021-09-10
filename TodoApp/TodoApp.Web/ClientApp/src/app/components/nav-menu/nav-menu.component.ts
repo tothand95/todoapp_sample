@@ -22,7 +22,6 @@ export class NavMenuComponent implements OnInit {
       this.isAdmin = (<string>userRole).toLowerCase() === 'Admin'.toLowerCase();
     });
     this.authService.emitLoginStatus();
-    this.authService.setUserRole();
   }
 
   collapse() {
