@@ -13,6 +13,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoAddComponent } from './components/todo-add/todo-add.component';
 import { JwtHelper } from 'angular2-jwt';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { JwtHelper } from 'angular2-jwt';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
