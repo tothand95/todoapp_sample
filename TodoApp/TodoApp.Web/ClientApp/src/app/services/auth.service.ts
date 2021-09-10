@@ -39,7 +39,7 @@ export class AuthService {
 
   public emitLoginStatus() {
     const token = localStorage.getItem('jwt');
-    this.changeLoginStatus.emit(token != null && !this.jwtHelper.isTokenExpired(token));
+    this.changeLoginStatus.emit(this.isLoggedIn());
   }
 
   public emitUserRole() {
@@ -47,15 +47,22 @@ export class AuthService {
   }
 
   public setUserRole() {
-    this.http.get('/api/user/rolesforuser', {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }).subscribe(response => {
-      localStorage.setItem('role', (<any>response).role);
-      this.emitUserRole();
-    }, err => {
-      localStorage.removeItem('role');
-    });
+    if (this.isLoggedIn()) {
+      this.http.get('/api/user/rolesforuser', {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }).subscribe(response => {
+        localStorage.setItem('role', (<any>response)[0]);
+        this.emitUserRole();
+      }, err => {
+        localStorage.removeItem('role');
+      });
+    }
+  }
+
+  private isLoggedIn(): boolean {
+    const token = localStorage.getItem('jwt');
+    return (token !== null && !this.jwtHelper.isTokenExpired(token));
   }
 }
