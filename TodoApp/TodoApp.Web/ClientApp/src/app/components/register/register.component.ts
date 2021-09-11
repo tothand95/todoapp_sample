@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
 
@@ -15,11 +16,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.formData = new RegisterRequest();
-    this.passwordConfirm = '';
+    this.formData.email = 'asd@asd.hu';
+    this.formData.password = 'asdasd';
+    this.formData.username = 'hahaasd';
+    this.passwordConfirm = 'asdasd';
     this.errors = [];
   }
 
-  public register() {
+  public register(form: NgForm) {
     this.errors.length = 0;
     if (this.formData.password === this.passwordConfirm) {
       this.authService.register(this.formData)
@@ -34,5 +38,12 @@ export class RegisterComponent implements OnInit {
           }
         });
     }
+  }
+
+  public getFile(event) {
+
+    this.formData.picture = (event.target.files as FileList).item(0);
+    console.log(this.formData.picture);
+
   }
 }

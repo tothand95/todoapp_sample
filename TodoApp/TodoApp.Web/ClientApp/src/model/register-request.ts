@@ -1,5 +1,6 @@
 export class RegisterRequest {
   username: string;
-  email: boolean;
+  email: string;
   password: string;
+  picture: File;
 }

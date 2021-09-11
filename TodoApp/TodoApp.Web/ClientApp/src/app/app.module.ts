@@ -19,6 +19,7 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -45,9 +46,9 @@ import { AddUserComponent } from './components/add-user/add-user.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'change-password', component: ChangePasswordComponent },
-      { path: 'todos', component: TodoListComponent },
-      { path: 'users', component: UserListComponent },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
+      { path: 'todos', component: TodoListComponent, canActivate: [AuthGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
     ])
   ],
   providers: [JwtHelper],

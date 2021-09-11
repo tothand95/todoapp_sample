@@ -15,14 +15,15 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoService, private authService: AuthService) { }
 
   ngOnInit() {
-    if (this.userId === null) {
-      this.todoService.listTodoForCurrentUser()
+    console.log(this.userId);
+    if (this.userId) {
+      this.todoService.listTodoForUser(this.userId, false)
         .subscribe(response => {
           this.todos = response;
         }, err => {
         });
     } else {
-      this.todoService.listTodoForUser(this.userId, false)
+      this.todoService.listTodoForCurrentUser()
         .subscribe(response => {
           this.todos = response;
         }, err => {

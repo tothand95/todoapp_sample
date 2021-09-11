@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +19,6 @@ using TodoApp.Common.Helpers;
 namespace TodoApp.Web.Controllers
 {
     [Produces("application/json")]
-    [Consumes("application/json")]
     [Route("api/user")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -91,7 +91,7 @@ namespace TodoApp.Web.Controllers
             return Ok(roles);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("listusers")]
         public async Task<IActionResult> ListUsers()
         {
@@ -100,8 +100,10 @@ namespace TodoApp.Web.Controllers
         }
 
         [HttpPost, Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
+        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
         {
+
+            var files = Request.Form.Files; 
             if (user == null)
                 return BadRequest("Request can't be completed. Internal server error.");
 

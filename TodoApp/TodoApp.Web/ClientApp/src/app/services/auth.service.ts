@@ -30,11 +30,28 @@ export class AuthService {
   }
 
   public register(requestData: RegisterRequest): Observable<void> {
-    return this.http.post<void>('/api/user/register', JSON.stringify(requestData), {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
+
+    const formData = new FormData();
+    for (const prop in requestData) {
+      if (!requestData.hasOwnProperty(prop)) { continue; }
+      formData.append(prop, requestData[prop]);
+    }
+
+    console.log(...formData);
+
+    return this.http.post<void>('/api/user/register', formData,
+      // {
+      //   headers: new HttpHeaders({
+      //     'Content-Type': 'multipart/form-data'
+      //   })
+      // }
+    );
+
+    // return this.http.post<void>('/api/user/register', JSON.stringify(requestData), {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // });
   }
 
   public emitLoginStatus() {

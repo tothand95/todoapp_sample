@@ -24,19 +24,19 @@ export class UserListComponent implements OnInit {
   public showTodosForUserModal(modalContent, user: UserModel) {
     this.selectedUserId = user.id;
     this.selectedUserName = user.userName;
-    this.openModal(modalContent);
+    this.openModal(modalContent, 'xl');
   }
 
   public showAddUserModal(modalContent) {
-    this.openModal(modalContent);
+    this.openModal(modalContent, 'md');
   }
 
   public userCreated() {
     this.listUsersApiCall();
   }
 
-  private openModal(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
+  private openModal(content, size: string) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
     }, (reason) => {
     });
   }

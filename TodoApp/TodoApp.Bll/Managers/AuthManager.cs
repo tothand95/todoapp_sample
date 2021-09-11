@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,16 @@ namespace TodoApp.Bll.Managers
                 Email = dto.Email,
                 UserName = dto.Username
             };
+
+            if (dto.Picture != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    dto.Picture.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    user.ProfilePicture = fileBytes;
+                }
+            }
 
             var result = await UserManager.CreateAsync(user, string.IsNullOrWhiteSpace(dto.Password) ? $"{dto.Username}" : dto.Password);
 
