@@ -34,7 +34,7 @@ namespace TodoApp.Web.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("getfromuserid/{userId}")]
         public async Task<IActionResult> GetTodosForUser(string userId, bool includeArchieved)
         {
