@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     TodoListComponent,
     TodoAddComponent,
     TodoCardComponent,
-    UserListComponent
+    UserListComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

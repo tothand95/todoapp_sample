@@ -1,26 +1,24 @@
 <ng-template #addUserModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Assignment was successful.</h4>
+        <h4 class="modal-title" id="modal-basic-title">Create a new user</h4>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.close()">Add user</button>
-        <button type="button" class="btn btn-danger" (click)="modal.close()">Cancel</button>
-    </div>
+    <app-add-user (userCreatedEvent)="userCreated(); modal.close()" (cancelEvent)="modal.close()" class="m-3">
+    </app-add-user>
 </ng-template>
 
 <ng-template #showTodosModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Show todos</h4>
+        <h4 class="modal-title" id="modal-basic-title">Todos for {{selectedUserName}}</h4>
     </div>
+    <app-todo-list [userId]="selectedUserId" class="m-1"></app-todo-list>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close()">Exit</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
     </div>
 </ng-template>
 
-<p>user list works</p>
-<button class="btn btn-primary" (click)="addUser(addUserModal)">Add user</button>
+<button class="btn btn-primary" (click)="showAddUserModal(addUserModal)">Add user</button>
 <div class="todo-container">
-    <div class="pointer-cursor" *ngFor="let user of users" (click)="showTodosForUser(showTodosModal)">
+    <div class="pointer-cursor" *ngFor="let user of users" (click)="showTodosForUserModal(showTodosModal, user)">
         {{user.userName}} - {{user.email}}
     </div>
 </div>
