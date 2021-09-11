@@ -26,7 +26,6 @@ export class RegisterComponent implements OnInit {
         .subscribe(response => {
           // TODO login and redirect
         }, err => {
-          console.log(err);
           this.errors.length = 0;
           if (typeof (err.error) === 'string') {
             this.errors.push(err.error);
