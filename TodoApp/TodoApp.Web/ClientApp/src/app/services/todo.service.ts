@@ -62,4 +62,14 @@ export class TodoService {
       })
     });
   }
+
+  public editTodo(dto: TodoModel): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.put<any>('/api/todo/edit', JSON.stringify(dto), {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 }

@@ -12,6 +12,7 @@ import { TodoModel } from 'src/model/todo-model';
 export class TodoListComponent implements OnInit {
   @Input() userId: string;
   todos: TodoModel[] = [];
+  selectedTodo: TodoModel;
 
   constructor(private todoService: TodoService, private authService: AuthService, private modalService: NgbModal) { }
 
@@ -29,6 +30,7 @@ export class TodoListComponent implements OnInit {
   }
 
   public showTodoModal(modalContent, todo: TodoModel) {
+    this.selectedTodo = todo;
     this.openModal(modalContent, 'lg');
   }
 

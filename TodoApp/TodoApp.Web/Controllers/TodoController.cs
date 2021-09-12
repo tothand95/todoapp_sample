@@ -61,6 +61,15 @@ namespace TodoApp.Web.Controllers
 
 
         [Authorize]
+        [HttpPut, Route("edit")]
+        public async Task<IActionResult> EditTodo([FromBody] TodoDto dto)
+        {
+            await TodoManager.UpdateTodoAsync(dto);
+            return Ok();
+        }
+
+
+        [Authorize]
         [HttpDelete, Route("delete/{id}")]
         public async Task<IActionResult> DeleteTodo(int id)
         {

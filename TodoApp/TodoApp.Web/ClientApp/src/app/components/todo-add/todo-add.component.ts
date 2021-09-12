@@ -21,18 +21,23 @@ export class TodoAddComponent implements OnInit {
   statusNames: string[] = [];
 
   constructor(private todoService: TodoService) { }
+
   ngOnInit() {
+    debugger;
     this.errors = [];
     if (!this.todoData) {
       this.todoData = new TodoModel();
       this.todoData.userId = this.userId;
-      this.ngbDate = { year: 2011, month: 2, day: 4 };
+      this.ngbDate = { year: 2021, month: 2, day: 4 };
     } else {
-      this.ngbDate = {
-        year: this.todoData.deadline.getFullYear(),
-        month: this.todoData.deadline.getMonth() + 1,
-        day: this.todoData.deadline.getDay()
-      };
+      if (this.todoData.deadline) {
+        this.todoData.deadline = new Date(this.todoData.deadline);
+        this.ngbDate = {
+          year: this.todoData.deadline.getFullYear(),
+          month: this.todoData.deadline.getMonth() + 1,
+          day: this.todoData.deadline.getDay()
+        };
+      }
     }
   }
 
@@ -40,6 +45,19 @@ export class TodoAddComponent implements OnInit {
     this.errors.length = 0;
 
     if (this.todoData.id) {
+      const jsDate = new Date(this.ngbDate.year, this.ngbDate.month - 1, this.ngbDate.day, 12);
+      this.todoData.deadline = jsDate;
+      this.todoService.editTodo(this.todoData)
+        .subscribe(response => {
+          this.todoCreatedEvent.emit(true);
+        }, err => {
+          this.errors.length = 0;
+          if (typeof (err.error) === 'string') {
+            this.errors.push(err.error);
+          } else {
+            this.errors.push(...err.error);
+          }
+        });
 
 
     } else {
