@@ -47,7 +47,7 @@ namespace TodoApp.Web.Controllers
         public async Task<IActionResult> GetTodosForCurrentUser()
         {
             var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), true);
+            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), false);
             return Ok(result);
         }
 
@@ -56,6 +56,15 @@ namespace TodoApp.Web.Controllers
         public async Task<IActionResult> CreateTodo([FromBody] TodoDto dto)
         {
             await TodoManager.CreateTodoAsync(dto);
+            return Ok();
+        }
+
+
+        [Authorize]
+        [HttpPut, Route("edit")]
+        public async Task<IActionResult> EditTodo([FromBody] TodoDto dto)
+        {
+            await TodoManager.UpdateTodoAsync(dto);
             return Ok();
         }
 

@@ -33,7 +33,7 @@ namespace TodoApp.Bll.Managers
             var user = DbContext.Users.Where(u => u.Id == dto.UserId).SingleOrDefault();
             if (user == null)
                 throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "User", Message = "User does not exist", Type = ValidationMessageType.Error } });
-            if (dto.TodoId != null)
+            if (dto.Id != null)
                 throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "TodoId", Message = "Cannot create todo with an already existing id", Type = ValidationMessageType.Error } });
 
 
@@ -74,7 +74,7 @@ namespace TodoApp.Bll.Managers
         /// <param name="id"></param>
         public async Task UpdateTodoAsync(TodoDto dto)
         {
-            var entity = DbContext.Todos.SingleOrDefault(t => t.Id == dto.TodoId);
+            var entity = DbContext.Todos.SingleOrDefault(t => t.Id == dto.Id);
             if (entity == null)
                 throw new ValidationException(new List<ValidationMessage> { new ValidationMessage { PropertyName = "Todo", Message = "Todo does not exist with the requested id", Type = ValidationMessageType.Error } });
 

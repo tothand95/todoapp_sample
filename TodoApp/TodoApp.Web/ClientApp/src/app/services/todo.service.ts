@@ -53,9 +53,19 @@ export class TodoService {
     });
   }
 
-  public createTodo(dto: any): Observable<any> {
+  public createTodo(dto: TodoModel): Observable<any> {
     const token = localStorage.getItem('jwt');
     return this.http.post<any>('/api/todo/create', JSON.stringify(dto), {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public editTodo(dto: TodoModel): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.put<any>('/api/todo/edit', JSON.stringify(dto), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TodoService } from 'src/app/services/todo.service';
 import { TodoModel } from 'src/model/todo-model';
 
 @Component({
@@ -9,9 +10,10 @@ import { TodoModel } from 'src/model/todo-model';
 export class TodoCardComponent implements OnInit {
   @Input() model: TodoModel;
 
-  constructor() { }
+  constructor(private todoService: TodoService) { }
 
   ngOnInit() {
   }
 
+ 
 }
