@@ -1,7 +1,7 @@
 <div class="container col-sm-5">
   <h2 class="h2-margin">Register</h2>
   <h5 class="h5-margin"> Welcome to ToDolphin! </h5>
-  <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="register(loginForm)">
+  <form class="form-horizontal" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
     <div *ngFor="let error of errors" class="alert alert-danger">
       {{error}}
     </div>

@@ -1,5 +1,5 @@
 <div class="container">
-    <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="addOrEditTodo()">
+    <form class="form-horizontal" #todoAddForm="ngForm" (ngSubmit)="addOrEditTodo()">
         <div *ngFor="let error of errors" class="alert alert-danger">
             {{error}}
         </div>
