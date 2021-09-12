@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
@@ -15,7 +16,7 @@ export class UserListComponent implements OnInit {
   selectedUserId: string;
   selectedUserName: string;
 
-  constructor(private authService: AuthService, private modalService: NgbModal) { }
+  constructor(private authService: AuthService, private modalService: NgbModal, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.listUsersApiCall();
@@ -35,6 +36,16 @@ export class UserListComponent implements OnInit {
     this.listUsersApiCall();
   }
 
+  public deleteUser(user: UserModel) {
+    if (confirm('Are you sure to delete ' + user.userName)) {
+      this.authService.deleteUser(user.id).subscribe(response => {
+        this.listUsersApiCall();
+      }, err => {
+        alert('Deleting user task failed.');
+      });
+    }
+  }
+
   private openModal(content, size: string) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
     }, (reason) => {
@@ -42,11 +53,15 @@ export class UserListComponent implements OnInit {
   }
 
   private listUsersApiCall() {
+    this.spinner.show();
     this.users = [];
     this.authService.listUsers()
       .subscribe(response => {
         this.users = response;
+        this.spinner.hide();
       }, err => {
+        this.spinner.hide();
       });
   }
+
 }

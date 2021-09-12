@@ -1,0 +1,20 @@
+.user-item{
+    padding-bottom: 6px;
+    padding-top: 6px;
+    background-color: rgb(220, 237, 248);
+    border: rgb(220, 237, 248) solid 1px;
+    border-radius: 5px;
+}
+
+.user-container{
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    width: auto;
+}
+
+.btn{
+    margin-left: 3px;
+    margin-right: 3px;
+}

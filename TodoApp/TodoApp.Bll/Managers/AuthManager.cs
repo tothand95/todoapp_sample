@@ -157,6 +157,22 @@ namespace TodoApp.Bll.Managers
             return users;
         }
 
+
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <returns></returns>
+        public async Task DeleteUserAsync(string userId)
+        {
+            var user = await DbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
+
+            var todos = await DbContext.Todos.Where(u => u.UserId == userId).ToListAsync();
+            DbContext.Todos.RemoveRange(todos);
+            await UserManager.DeleteAsync(user);
+        }
+
         /// <summary>
         /// Get profile picture for username
         /// </summary>

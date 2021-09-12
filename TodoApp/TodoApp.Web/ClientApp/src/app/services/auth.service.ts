@@ -72,6 +72,16 @@ export class AuthService {
     });
   }
 
+  public deleteUser(userid: string): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.delete<any>('/api/user/deleteuser/' + userid, {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   public isLoggedIn(): boolean {
     const token = localStorage.getItem('jwt');
     return (token !== null && !this.jwtHelper.isTokenExpired(token));

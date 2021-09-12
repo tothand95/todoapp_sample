@@ -99,6 +99,14 @@ namespace TodoApp.Web.Controllers
             return Ok(users);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpDelete, Route("deleteuser/{userid}")]
+        public async Task<IActionResult> DeleteUser(string userid)
+        {
+            await AuthManager.DeleteUserAsync(userid);
+            return Ok();
+        }
+
         [HttpPost, Route("register")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
         {
