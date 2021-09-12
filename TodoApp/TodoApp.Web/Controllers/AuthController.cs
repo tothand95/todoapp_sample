@@ -63,7 +63,7 @@ namespace TodoApp.Web.Controllers
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new LoginResponseDto { Token = tokenString, NeedNewPassword = DefaultPasswordHelper.GenerateDefaultPasswordForUser(user.Username) == user.Password });
+                return Ok(new LoginResponseDto { Username = user.Username, Token = tokenString, NeedNewPassword = DefaultPasswordHelper.GenerateDefaultPasswordForUser(user.Username) == user.Password });
             }
             else
             {
@@ -113,13 +113,13 @@ namespace TodoApp.Web.Controllers
                 return BadRequest(result.Errors.Select(e => e.Description).ToList());
         }
 
-        [HttpGet, Route("profilepicture/{userId}")]
-        public async Task<IActionResult> GetProfilePicture(string userId)
+        [HttpGet, Route("profilepicture/{username}")]
+        public async Task<IActionResult> GetProfilePicture(string username)
         {
-            if(string.IsNullOrWhiteSpace(userId))
-                userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(username))
+                username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var picture = await AuthManager.GetProfilePicture(userId);
+            var picture = await AuthManager.GetProfilePicture(username);
             return File(picture, "image/jpeg");
         }
     }

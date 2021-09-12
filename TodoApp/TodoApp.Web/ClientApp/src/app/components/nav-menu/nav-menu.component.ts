@@ -20,18 +20,6 @@ export class NavMenuComponent implements OnInit {
   ngOnInit(): void {
     this.authService.changeLoginStatus.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
-
-      // if (isLoggedIn) {
-
-      //   this.authService.getProfilePicture('hahaasd').subscribe(response => {
-      //     console.log(response);
-
-      //     this.imageData = 'data:image/png;base64,' + response;
-      //     this.sanitzedImageData = this.sanitizer.bypassSecurityTrustUrl(this.imageData);
-      //   }, err => {
-
-      //   });
-      // }
     });
     this.authService.changeUserRole.subscribe(userRole => {
       this.isAdmin = (<string>userRole).toLowerCase() === 'Admin'.toLowerCase();
@@ -51,4 +39,5 @@ export class NavMenuComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
 }

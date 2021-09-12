@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   password: string;
   error: string;
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -24,13 +25,12 @@ export class LoginComponent implements OnInit {
 
   login(form: NgForm) {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('username');
     const credentials = JSON.stringify(form.value);
     this.authService.login(credentials)
       .subscribe(response => {
-        const token = response.token;
-        localStorage.setItem('jwt', token);
-
-        this.authService.emitLoginStatus();
+        localStorage.setItem('jwt', response.token);
+        localStorage.setItem('username', response.username);
 
         this.invalidLogin = false;
 
@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit {
         } else {
           this.router.navigate(['/todos']);
         }
+
+        this.authService.emitLoginStatus();
+
       }, err => {
         this.authService.emitLoginStatus();
 

@@ -9,19 +9,27 @@ import { AuthService } from '../services/auth.service';
 })
 
 export class ProfileImageDirective implements OnInit {
-  imageData: any;
   sanitizedImageData: any;
-  @Input('appProfileImage') userId: string;
 
   constructor(private authService: AuthService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.authService.getProfilePicture(this.userId)
-      .subscribe(
-        data => {
-          this.imageData = URL.createObjectURL(data);
-          this.sanitizedImageData = this.sanitizer.bypassSecurityTrustUrl(this.imageData);
-        }
-      );
+    const username = localStorage.getItem('username');
+    if (username) {
+      this.authService.getProfilePicture(username)
+        .subscribe(
+          (data: Blob) => {
+            if (data.size === 0) {
+              this.sanitizedImageData = 'assets/images/placeholder.jpg';
+            } else {
+              const imageData = URL.createObjectURL(data);
+              this.sanitizedImageData = this.sanitizer.bypassSecurityTrustUrl(imageData);
+            }
+          }, err => {
+
+            this.sanitizedImageData = 'assets/images/placeholder.jpg';
+          }
+        );
+    }
   }
 }

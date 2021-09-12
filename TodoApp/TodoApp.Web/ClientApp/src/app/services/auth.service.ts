@@ -22,8 +22,8 @@ export class AuthService {
     });
   }
 
-  public getProfilePicture(userId: string): Observable<any> {
-    return this.http.get<any>('/api/user/profilepicture/' + userId, {
+  public getProfilePicture(username: string): Observable<any> {
+    return this.http.get<any>('/api/user/profilepicture/' + username, {
       responseType: 'blob' as 'json'
     });
   }
@@ -31,6 +31,7 @@ export class AuthService {
   public logout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
 
     this.emitLoginStatus();
   }
@@ -42,15 +43,6 @@ export class AuthService {
       formData.append(prop, requestData[prop]);
     }
     return this.http.post<void>('/api/user/register', formData);
-  }
-
-  public emitLoginStatus() {
-    const token = localStorage.getItem('jwt');
-    this.changeLoginStatus.emit(this.isLoggedIn());
-  }
-
-  public emitUserRole() {
-    this.changeUserRole.emit(localStorage.getItem('role'));
   }
 
   public setUserRole() {
@@ -83,5 +75,14 @@ export class AuthService {
   public isLoggedIn(): boolean {
     const token = localStorage.getItem('jwt');
     return (token !== null && !this.jwtHelper.isTokenExpired(token));
+  }
+
+  public emitLoginStatus() {
+    const token = localStorage.getItem('jwt');
+    this.changeLoginStatus.emit(this.isLoggedIn());
+  }
+
+  public emitUserRole() {
+    this.changeUserRole.emit(localStorage.getItem('role'));
   }
 }

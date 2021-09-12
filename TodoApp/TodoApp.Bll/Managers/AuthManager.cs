@@ -158,17 +158,17 @@ namespace TodoApp.Bll.Managers
         }
 
         /// <summary>
-        /// Get profile picture for user
+        /// Get profile picture for username
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
-        public async Task<byte[]> GetProfilePicture(string userId)
+        public async Task<byte[]> GetProfilePicture(string username)
         {
-            var user = await DbContext.Users.SingleOrDefaultAsync(u => userId == u.Id);
+            var user = await DbContext.Users.SingleOrDefaultAsync(u => username.ToUpper() == u.NormalizedUserName);
             if (user == null)
                 throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
 
-            return user.ProfilePicture;
+            return user.ProfilePicture != null ? user.ProfilePicture : new byte[] { };
         }
     }
 }
