@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from 'oidc-client';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
@@ -13,8 +14,7 @@ import { UserModel } from 'src/model/user-model';
 export class UserListComponent implements OnInit {
   users: UserModel[];
   newUser: RegisterRequest;
-  selectedUserId: string;
-  selectedUserName: string;
+  selectedUser: UserModel;
 
   constructor(private authService: AuthService, private modalService: NgbModal, private spinner: NgxSpinnerService) { }
 
@@ -23,12 +23,12 @@ export class UserListComponent implements OnInit {
   }
 
   public showTodosForUserModal(modalContent, user: UserModel) {
-    this.selectedUserId = user.id;
-    this.selectedUserName = user.userName;
+    this.selectedUser = user;
     this.openModal(modalContent, 'xl');
   }
 
   public showAddUserModal(modalContent) {
+    this.selectedUser = null;
     this.openModal(modalContent, 'md');
   }
 
@@ -44,6 +44,11 @@ export class UserListComponent implements OnInit {
         alert('Deleting user task failed.');
       });
     }
+  }
+
+  public editUser(modalContent, user: UserModel) {
+    this.selectedUser = user;
+    this.openModal(modalContent, 'md');
   }
 
   private openModal(content, size: string) {
