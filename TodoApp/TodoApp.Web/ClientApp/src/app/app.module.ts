@@ -20,6 +20,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ProfileImageDirective } from './directives/profile-image.directive';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthGuard } from './guards/auth.guard';
     TodoAddComponent,
     TodoCardComponent,
     UserListComponent,
-    AddUserComponent
+    AddUserComponent,
+    ProfileImageDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,6 +53,7 @@ import { AuthGuard } from './guards/auth.guard';
       { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
     ])
   ],
+  exports: [ProfileImageDirective],
   providers: [JwtHelper],
   bootstrap: [AppComponent]
 })

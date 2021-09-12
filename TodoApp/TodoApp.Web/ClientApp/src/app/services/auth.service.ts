@@ -22,6 +22,12 @@ export class AuthService {
     });
   }
 
+  public getProfilePicture(userId: string): Observable<any> {
+    return this.http.get<any>('/api/user/profilepicture/' + userId, {
+      responseType: 'blob' as 'json'
+    });
+  }
+
   public logout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
@@ -30,28 +36,12 @@ export class AuthService {
   }
 
   public register(requestData: RegisterRequest): Observable<void> {
-
     const formData = new FormData();
     for (const prop in requestData) {
       if (!requestData.hasOwnProperty(prop)) { continue; }
       formData.append(prop, requestData[prop]);
     }
-
-    console.log(...formData);
-
-    return this.http.post<void>('/api/user/register', formData,
-      // {
-      //   headers: new HttpHeaders({
-      //     'Content-Type': 'multipart/form-data'
-      //   })
-      // }
-    );
-
-    // return this.http.post<void>('/api/user/register', JSON.stringify(requestData), {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json'
-    //   })
-    // });
+    return this.http.post<void>('/api/user/register', formData);
   }
 
   public emitLoginStatus() {

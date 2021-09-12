@@ -15,7 +15,6 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoService, private authService: AuthService) { }
 
   ngOnInit() {
-    console.log(this.userId);
     if (this.userId) {
       this.todoService.listTodoForUser(this.userId, false)
         .subscribe(response => {

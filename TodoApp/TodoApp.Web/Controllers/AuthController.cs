@@ -102,8 +102,6 @@ namespace TodoApp.Web.Controllers
         [HttpPost, Route("register")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
         {
-
-            var files = Request.Form.Files; 
             if (user == null)
                 return BadRequest("Request can't be completed. Internal server error.");
 
@@ -113,6 +111,16 @@ namespace TodoApp.Web.Controllers
                 return Ok();
             else
                 return BadRequest(result.Errors.Select(e => e.Description).ToList());
+        }
+
+        [HttpGet, Route("profilepicture/{userId}")]
+        public async Task<IActionResult> GetProfilePicture(string userId)
+        {
+            if(string.IsNullOrWhiteSpace(userId))
+                userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var picture = await AuthManager.GetProfilePicture(userId);
+            return File(picture, "image/jpeg");
         }
     }
 }

@@ -18,5 +18,6 @@ namespace TodoApp.Bll.Managers
         Task<List<string>> GetRolesForUserAsync(string username);
         Task<bool> HasRoleAsync(string username, string role);
         Task<List<ApplicationUser>> ListUsersAsync();
+        Task<byte[]> GetProfilePicture(string userId);
     }
 }
