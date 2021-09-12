@@ -1,9 +1,10 @@
 # TodoApp_SampleProject
 
-Todo managing web application created with ASP.NET Core 3.1 and Angular 8 technologies.
+Todo listing web application created with ASP.NET Core 3.1 and Angular 8 technologies.
 
 Optional extra tasks completed:
 - Register and Login feature with username and password using an enhanced IdentityDbContext. (Users created by admin have a default password.)
+- Authentication guards for API calls.
 - Role based authorization for API calls. There are two roles currently: Admin and User.
 - Logging to console.
 - Angular frontend with ~90% functionality and minor bugs.
