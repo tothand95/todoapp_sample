@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TodoService } from 'src/app/services/todo.service';
 import { TodoModel } from 'src/model/todo-model';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { TodoPriority } from 'src/model/todo-priority';
+import { TodoStatus } from 'src/model/todo-status';
 
 @Component({
   selector: 'app-todo-add',
@@ -15,8 +17,10 @@ export class TodoAddComponent implements OnInit {
   @Input() userId: string;
   errors: string[] = [];
   ngbDate: NgbDateStruct;
-  constructor(private todoService: TodoService) { }
+  priorityNames: string[] = [];
+  statusNames: string[] = [];
 
+  constructor(private todoService: TodoService) { }
   ngOnInit() {
     this.errors = [];
     if (!this.todoData) {
