@@ -4,6 +4,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { Observable } from 'rxjs/internal/Observable';
 import { LoginResponse } from 'src/model/login-response';
 import { RegisterRequest } from 'src/model/register-request';
+import { UserModel } from 'src/model/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,26 @@ export class AuthService {
   public listUsers(): Observable<any> {
     const token = localStorage.getItem('jwt');
     return this.http.get<any>('/api/user/listusers/', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public deleteUser(userid: string): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.delete<any>('/api/user/deleteuser/' + userid, {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public editUser(userData: UserModel): Observable<boolean> {
+    const token = localStorage.getItem('jwt');
+    return this.http.put<boolean>('/api/user/edituser', JSON.stringify(userData), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

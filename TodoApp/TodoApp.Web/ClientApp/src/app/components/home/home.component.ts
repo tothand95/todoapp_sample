@@ -14,13 +14,5 @@ export class HomeComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/todos']);
     }
-
-    /** spinner starts on init */
-    this.spinner.show();
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
   }
 }

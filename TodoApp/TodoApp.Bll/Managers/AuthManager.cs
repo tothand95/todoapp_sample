@@ -99,6 +99,23 @@ namespace TodoApp.Bll.Managers
             return result;
         }
 
+
+        /// <summary>
+        /// Edit user data
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task<bool> EditUserAsync(UserDto dto)
+        {
+            var user = DbContext.Users.SingleOrDefault(u => u.Id == dto.Id);
+            if (user == null)
+                throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
+
+            user.Email = dto.Email;
+
+            await DbContext.SaveChangesAsync();
+            return true;
+        }
         /// <summary>
         /// Changes password for the given user
         /// </summary>
@@ -155,6 +172,22 @@ namespace TodoApp.Bll.Managers
         {
             var users = await DbContext.Users.ToListAsync();
             return users;
+        }
+
+
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <returns></returns>
+        public async Task DeleteUserAsync(string userId)
+        {
+            var user = await DbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
+
+            var todos = await DbContext.Todos.Where(u => u.UserId == userId).ToListAsync();
+            DbContext.Todos.RemoveRange(todos);
+            await UserManager.DeleteAsync(user);
         }
 
         /// <summary>
