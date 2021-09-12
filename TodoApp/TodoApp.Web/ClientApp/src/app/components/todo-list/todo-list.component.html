@@ -2,14 +2,16 @@
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Create a new todo</h4>
     </div>
-    <app-todo-add [userId]="userId" class="m-3"></app-todo-add>
+    <app-todo-add [userId]="userId" class="m-3" (todoCreatedEvent)="todoCreated(); modal.close()" (cancelEvent)="modal.close()"></app-todo-add>
 </ng-template>
 
 <button class="btn btn-primary" (click)="showTodoModal(createOrEditTodo, null)">Add todo</button>
 
 <div class="todo-container">
-    <span *ngFor="let todo of todos" (click)="showTodoModal(createOrEditTodo, todo)">
-        <app-todo-card [model]="todo"></app-todo-card>
-
+    <span *ngFor="let todo of todos" >
+        <app-todo-card (click)="showTodoModal(createOrEditTodo, todo)" [model]="todo"></app-todo-card>
+        <button type="button" class="btn btn-secondary" (click)="deleteTodo(todo)">
+            <i class="fa fa-trash"></i>
+        </button>
     </span>
 </div>

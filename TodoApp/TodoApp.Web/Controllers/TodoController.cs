@@ -47,7 +47,7 @@ namespace TodoApp.Web.Controllers
         public async Task<IActionResult> GetTodosForCurrentUser()
         {
             var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), true);
+            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), false);
             return Ok(result);
         }
 

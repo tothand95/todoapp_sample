@@ -21,8 +21,6 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { ProfileImageDirective } from './directives/profile-image.directive';
 import { AuthGuard } from './guards/auth.guard';
-import { NgSelect2Module } from 'ng-select2';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -47,8 +45,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     BrowserAnimationsModule,
     NgbModalModule,
     NgbDatepickerModule,
-    NgSelect2Module,
-    NgSelectModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
