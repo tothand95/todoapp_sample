@@ -10,6 +10,7 @@ namespace TodoApp.Bll.Entities
     {
         public ApplicationUser() { }
         public ApplicationUser(string username) : base(username) {
+            Id = username;
             NormalizedUserName = username.ToUpper();
         }
 

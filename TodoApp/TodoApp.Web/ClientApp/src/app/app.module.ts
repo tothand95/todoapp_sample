@@ -17,7 +17,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ProfileImageDirective } from './directives/profile-image.directive';
@@ -44,6 +44,7 @@ import { ProfileImageDirective } from './directives/profile-image.directive';
     NgxSpinnerModule,
     BrowserAnimationsModule,
     NgbModalModule,
+    NgbDatepickerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },

@@ -181,22 +181,22 @@ namespace TodoApp.Bll.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3e06a95f-bea6-4721-a545-b4d7c09a9384", "2aee6dd1-6f55-44a3-b251-21f85d2117dd", "Admin", "ADMIN" });
+                values: new object[] { "4ecb2eef-7acf-479e-ada2-a34e2aa014b3", "d415b929-3a3f-4d43-a1ca-a8e32ca46293", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "00029f18-3e81-42cb-a72b-fdd194c806cd", "302c9218-2ebe-4542-9797-16d1ad8a792a", "User", "USER" });
+                values: new object[] { "f680554b-7ccf-43ed-ad87-63f2dcc51152", "296cf4b7-7c5d-488a-a2cd-60a424a00ddf", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfilePicture", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dd0ca997-f546-427c-a5da-2d8155226134", 0, "cbd62af8-55e8-4eef-8ffb-787f8cc6747d", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEJH89s18RxfJ2kT4kPPWJB0JhnhRysA6ggwSE0pAWs2tU9DBIYSM+ZZfrtF6VHCXhA==", null, false, null, "e96ffc99-ab7a-4b49-85e8-00e281021246", false, "Admin" });
+                values: new object[] { "Admin", 0, "359ecfc9-bcf6-4cf5-a93e-5504102d486c", null, false, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEJhX4EYIZUdvwGr6Ceu43oqKr+BuFiOtPHnLzlVN6k+4B2/YJ89Wa2GicYUhVhCiRQ==", null, false, null, "5a765375-1c68-4fd9-a205-1ddbb3c78a04", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "dd0ca997-f546-427c-a5da-2d8155226134", "3e06a95f-bea6-4721-a545-b4d7c09a9384" });
+                values: new object[] { "Admin", "4ecb2eef-7acf-479e-ada2-a34e2aa014b3" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

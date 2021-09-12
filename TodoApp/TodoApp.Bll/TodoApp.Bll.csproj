@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20210910144816_todo-softdelete.Designer.cs" />
     <Compile Remove="Migrations\20210910150637_todo-title.cs" />
     <Compile Remove="Migrations\20210910150637_todo-title.Designer.cs" />
+    <Compile Remove="Migrations\20210910193313_database-init.cs" />
+    <Compile Remove="Migrations\20210910193313_database-init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
