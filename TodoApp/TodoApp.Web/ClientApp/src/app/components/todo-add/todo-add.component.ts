@@ -23,7 +23,6 @@ export class TodoAddComponent implements OnInit {
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    debugger;
     this.errors = [];
     if (!this.todoData) {
       this.todoData = new TodoModel();

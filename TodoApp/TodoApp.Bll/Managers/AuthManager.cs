@@ -62,11 +62,11 @@ namespace TodoApp.Bll.Managers
             {
                 using (var ms = new MemoryStream())
                 {
-                    string[] permittedExtensions = { ".jpg", ".jpeg", ".png" };
+                    string[] permittedExtensions = { ".jpg" };
                     var ext = Path.GetExtension(dto.Picture.FileName).ToLowerInvariant();
 
                     if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
-                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg, .jpeg or .png" } });
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg"} });
                     if (ms.Length > 2097152)
                         throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File size is larger than 2MB." } });
 
@@ -113,9 +113,28 @@ namespace TodoApp.Bll.Managers
 
             user.Email = dto.Email;
 
+            if (dto.Picture != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    string[] permittedExtensions = { ".jpg" };
+                    var ext = Path.GetExtension(dto.Picture.FileName).ToLowerInvariant();
+
+                    if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg" } });
+                    if (ms.Length > 2097152)
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File size is larger than 2MB." } });
+
+                    dto.Picture.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    user.ProfilePicture = fileBytes;
+                }
+            }
+
             await DbContext.SaveChangesAsync();
             return true;
         }
+
         /// <summary>
         /// Changes password for the given user
         /// </summary>

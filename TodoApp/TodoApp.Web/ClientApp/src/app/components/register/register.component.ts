@@ -52,9 +52,6 @@ export class RegisterComponent implements OnInit {
   }
 
   public getFile(event) {
-
     this.formData.picture = (event.target.files as FileList).item(0);
-    console.log(this.formData.picture);
-
   }
 }
