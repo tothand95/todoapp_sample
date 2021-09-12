@@ -1,5 +1,8 @@
 <div class="container">
-  <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="addUser()">
+  <div class="alert alert-info" role="alert" *ngIf="!userToEdit">
+    Users created this way will have a default password. The default password is the username.
+  </div>
+  <form class="form-horizontal" #addUserForm="ngForm" (ngSubmit)="addUser()">
     <div *ngFor="let error of errors" class="alert alert-danger">
       {{error}}
     </div>
