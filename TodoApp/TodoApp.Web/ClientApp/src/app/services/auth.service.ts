@@ -22,34 +22,35 @@ export class AuthService {
     });
   }
 
+  public getProfilePicture(username: string): Observable<any> {
+    return this.http.get<any>('/api/user/profilepicture/' + username, {
+      responseType: 'blob' as 'json'
+    });
+  }
+
   public logout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
 
     this.emitLoginStatus();
   }
 
   public register(requestData: RegisterRequest): Observable<void> {
-    return this.http.post<void>('/api/user/register', JSON.stringify(requestData), {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  public emitLoginStatus() {
-    const token = localStorage.getItem('jwt');
-    this.changeLoginStatus.emit(this.isLoggedIn());
-  }
-
-  public emitUserRole() {
-    this.changeUserRole.emit(localStorage.getItem('role'));
+    const formData = new FormData();
+    for (const prop in requestData) {
+      if (!requestData.hasOwnProperty(prop)) { continue; }
+      formData.append(prop, requestData[prop]);
+    }
+    return this.http.post<void>('/api/user/register', formData);
   }
 
   public setUserRole() {
+    const token = localStorage.getItem('jwt');
     if (this.isLoggedIn()) {
       this.http.get('/api/user/rolesforuser', {
         headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + token,
           'Content-Type': 'application/json'
         })
       }).subscribe(response => {
@@ -61,8 +62,27 @@ export class AuthService {
     }
   }
 
-  private isLoggedIn(): boolean {
+  public listUsers(): Observable<any> {
+    const token = localStorage.getItem('jwt');
+    return this.http.get<any>('/api/user/listusers/', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  public isLoggedIn(): boolean {
     const token = localStorage.getItem('jwt');
     return (token !== null && !this.jwtHelper.isTokenExpired(token));
+  }
+
+  public emitLoginStatus() {
+    const token = localStorage.getItem('jwt');
+    this.changeLoginStatus.emit(this.isLoggedIn());
+  }
+
+  public emitUserRole() {
+    this.changeUserRole.emit(localStorage.getItem('role'));
   }
 }

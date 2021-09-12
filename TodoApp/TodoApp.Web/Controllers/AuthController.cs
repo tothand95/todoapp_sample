@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +19,6 @@ using TodoApp.Common.Helpers;
 namespace TodoApp.Web.Controllers
 {
     [Produces("application/json")]
-    [Consumes("application/json")]
     [Route("api/user")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -63,7 +63,7 @@ namespace TodoApp.Web.Controllers
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                return Ok(new LoginResponseDto { Token = tokenString, NeedNewPassword = DefaultPasswordHelper.GenerateDefaultPasswordForUser(user.Username) == user.Password });
+                return Ok(new LoginResponseDto { Username = user.Username, Token = tokenString, NeedNewPassword = DefaultPasswordHelper.GenerateDefaultPasswordForUser(user.Username) == user.Password });
             }
             else
             {
@@ -91,8 +91,16 @@ namespace TodoApp.Web.Controllers
             return Ok(roles);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet, Route("listusers")]
+        public async Task<IActionResult> ListUsers()
+        {
+            var users = await AuthManager.ListUsersAsync();
+            return Ok(users);
+        }
+
         [HttpPost, Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
+        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
         {
             if (user == null)
                 return BadRequest("Request can't be completed. Internal server error.");
@@ -103,6 +111,16 @@ namespace TodoApp.Web.Controllers
                 return Ok();
             else
                 return BadRequest(result.Errors.Select(e => e.Description).ToList());
+        }
+
+        [HttpGet, Route("profilepicture/{username}")]
+        public async Task<IActionResult> GetProfilePicture(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var picture = await AuthManager.GetProfilePicture(username);
+            return File(picture, "image/jpeg");
         }
     }
 }

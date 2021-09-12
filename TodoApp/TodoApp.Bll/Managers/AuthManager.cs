@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,24 @@ namespace TodoApp.Bll.Managers
                 UserName = dto.Username
             };
 
+            if (dto.Picture != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    string[] permittedExtensions = { ".jpg", ".jpeg", ".png" };
+                    var ext = Path.GetExtension(dto.Picture.FileName).ToLowerInvariant();
+
+                    if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg, .jpeg or .png" } });
+                    if (ms.Length > 2097152)
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File size is larger than 2MB." } });
+
+                    dto.Picture.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    user.ProfilePicture = fileBytes;
+                }
+            }
+
             var result = await UserManager.CreateAsync(user, string.IsNullOrWhiteSpace(dto.Password) ? $"{dto.Username}" : dto.Password);
 
             if (result.Succeeded)
@@ -89,7 +108,10 @@ namespace TodoApp.Bll.Managers
         /// <returns></returns>
         public async Task<IdentityResult> ChangePasswordAsync(string username, string currentPassword, string newPassword)
         {
-            var user = await UserManager.Users.SingleAsync(u => u.UserName.ToLower() == username.ToLower());
+            var user = await UserManager.Users.SingleOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
+            if (user == null)
+                throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
+
             var result = await UserManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
             return result;
@@ -123,6 +145,30 @@ namespace TodoApp.Bll.Managers
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// List all of the users in the application
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ApplicationUser>> ListUsersAsync()
+        {
+            var users = await DbContext.Users.ToListAsync();
+            return users;
+        }
+
+        /// <summary>
+        /// Get profile picture for username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public async Task<byte[]> GetProfilePicture(string username)
+        {
+            var user = await DbContext.Users.SingleOrDefaultAsync(u => username.ToUpper() == u.NormalizedUserName);
+            if (user == null)
+                throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
+
+            return user.ProfilePicture != null ? user.ProfilePicture : new byte[] { };
         }
     }
 }

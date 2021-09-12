@@ -18,3 +18,7 @@ code {
 .card-background{
   background-color: rgb(200,237,255);
 }
+
+.pointer-cursor {
+  cursor: pointer;
+}

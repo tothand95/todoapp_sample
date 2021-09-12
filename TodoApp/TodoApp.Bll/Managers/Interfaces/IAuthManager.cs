@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 using TodoApp.Bll.Dtos;
+using TodoApp.Bll.Entities;
 
 namespace TodoApp.Bll.Managers
 {
@@ -16,5 +17,7 @@ namespace TodoApp.Bll.Managers
         Task<IdentityResult> ChangePasswordAsync(string username, string currentPassword, string newPassword);
         Task<List<string>> GetRolesForUserAsync(string username);
         Task<bool> HasRoleAsync(string username, string role);
+        Task<List<ApplicationUser>> ListUsersAsync();
+        Task<byte[]> GetProfilePicture(string userId);
     }
 }

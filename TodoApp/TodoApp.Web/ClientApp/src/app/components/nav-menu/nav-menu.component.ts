@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,8 +12,10 @@ export class NavMenuComponent implements OnInit {
   isExpanded = false;
   isLoggedIn: boolean;
   isAdmin: boolean;
+  imageData: any;
+  sanitzedImageData: any;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.authService.changeLoginStatus.subscribe(isLoggedIn => {
@@ -36,4 +39,5 @@ export class NavMenuComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
 }
