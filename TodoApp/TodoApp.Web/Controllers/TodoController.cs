@@ -26,33 +26,34 @@ namespace TodoApp.Web.Controllers
             TodoManager = todoManager;
         }
 
+
         [Authorize]
-        [HttpGet, Route("getfromid/{id}")]
-        public async Task<IActionResult> GetTodoFromId(int id)
+        [HttpGet, Route("{id}")]
+        public async Task<IActionResult> GetTodoById(int id)
         {
             var result = await TodoManager.GetTodoAsync(id);
             return Ok(result);
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet, Route("getfromuserid/{userId}")]
+        [HttpGet, Route("user/{userId}/todos")]
         public async Task<IActionResult> GetTodosForUser(string userId, bool includeArchieved)
         {
             var result = await TodoManager.ListTodoForUserAsync(userId, includeArchieved);
             return Ok(result);
         }
 
-        [Authorize]
-        [HttpGet, Route("getforcurrentuser")]
-        public async Task<IActionResult> GetTodosForCurrentUser()
-        {
-            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), false);
-            return Ok(result);
-        }
+        //[Authorize]
+        //[HttpGet, Route("getforcurrentuser")]
+        //public async Task<IActionResult> GetTodosForCurrentUser()
+        //{
+        //    var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var result = await TodoManager.ListTodoForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier), false);
+        //    return Ok(result);
+        //}
 
         [Authorize]
-        [HttpPost, Route("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateTodo([FromBody] TodoDto dto)
         {
             await TodoManager.CreateTodoAsync(dto);
@@ -61,7 +62,7 @@ namespace TodoApp.Web.Controllers
 
 
         [Authorize]
-        [HttpPut, Route("edit")]
+        [HttpPut, Route("{id}")]
         public async Task<IActionResult> EditTodo([FromBody] TodoDto dto)
         {
             await TodoManager.UpdateTodoAsync(dto);
@@ -70,7 +71,7 @@ namespace TodoApp.Web.Controllers
 
 
         [Authorize]
-        [HttpDelete, Route("delete/{id}")]
+        [HttpDelete, Route("{id}")]
         public async Task<IActionResult> DeleteTodo(int id)
         {
             await TodoManager.DeleteTodoAsync(id);

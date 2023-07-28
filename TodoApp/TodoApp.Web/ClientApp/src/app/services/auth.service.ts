@@ -16,15 +16,15 @@ export class AuthService {
   constructor(private jwtHelper: JwtHelper, private http: HttpClient) { }
 
   public login(credentialsJson: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/api/user/login', credentialsJson, {
+    return this.http.post<LoginResponse>('/api/auth/login', credentialsJson, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     });
   }
 
-  public getProfilePicture(username: string): Observable<any> {
-    return this.http.get<any>('/api/user/profilepicture/' + username, {
+  public getProfilePicture(userid: string): Observable<any> {
+    return this.http.get<any>('/api/user/' + userid + '/profilepicture', {
       responseType: 'blob' as 'json'
     });
   }
@@ -58,7 +58,7 @@ export class AuthService {
       }).subscribe(response => {
         localStorage.setItem('role', (<any>response)[0]);
         this.emitUserRole();
-      }, err => {
+      }, _err => {
         localStorage.removeItem('role');
       });
     }
@@ -66,7 +66,7 @@ export class AuthService {
 
   public listUsers(): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.get<any>('/api/user/listusers/', {
+    return this.http.get<any>('api/users', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ export class AuthService {
 
   public deleteUser(userid: string): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.delete<any>('/api/user/deleteuser/' + userid, {
+    return this.http.delete<any>('/api/user/' + userid, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ export class AuthService {
 
   public editUser(userData: UserModel): Observable<boolean> {
     const token = localStorage.getItem('jwt');
-    return this.http.put<boolean>('/api/user/edituser', JSON.stringify(userData), {
+    return this.http.put<boolean>('api/user/' + userData.id, JSON.stringify(userData), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -100,7 +100,6 @@ export class AuthService {
   }
 
   public emitLoginStatus() {
-    const token = localStorage.getItem('jwt');
     this.changeLoginStatus.emit(this.isLoggedIn());
   }
 

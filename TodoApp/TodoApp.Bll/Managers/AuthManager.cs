@@ -66,7 +66,7 @@ namespace TodoApp.Bll.Managers
                     var ext = Path.GetExtension(dto.Picture.FileName).ToLowerInvariant();
 
                     if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
-                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg"} });
+                        throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File extension is not supported. Must be .jpg" } });
                     if (ms.Length > 2097152)
                         throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "File size is larger than 2MB." } });
 
@@ -138,13 +138,13 @@ namespace TodoApp.Bll.Managers
         /// <summary>
         /// Changes password for the given user
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="userid"></param>
         /// <param name="currentPassword"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        public async Task<IdentityResult> ChangePasswordAsync(string username, string currentPassword, string newPassword)
+        public async Task<IdentityResult> ChangePasswordAsync(string userid, string currentPassword, string newPassword)
         {
-            var user = await UserManager.Users.SingleOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
+            var user = await UserManager.Users.SingleOrDefaultAsync(u => u.Id == userid);
             if (user == null)
                 throw new ValidationException(new List<ValidationMessage>() { new ValidationMessage { Message = "Requested user does not exist." } });
 

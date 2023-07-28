@@ -19,7 +19,6 @@ using TodoApp.Common.Helpers;
 namespace TodoApp.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/user")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -31,19 +30,19 @@ namespace TodoApp.Web.Controllers
         }
 
 
-        [HttpPost, Route("login")]
+        [HttpPost, Route("api/auth/login")]
         public async Task<IActionResult> Login([FromBody] LoginDto user)
         {
             if (user == null)
             {
-                return BadRequest("Request can't be completed. Internal server error.");
+                return BadRequest("Request can't be completed. No login data provided.");
             }
 
             var response = await AuthManager.LoginAsync(user.Username, user.Password);
 
             if (response.Succeeded)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")); //TODO get from somewhere, maxbe Azure KeyVault
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")); //TODO get from somewhere, maybe Azure KeyVault
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var roles = await AuthManager.GetRolesForUserAsync(user.Username);
 
@@ -72,7 +71,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize]
-        [HttpPost, Route("changepassword")]
+        [HttpPost, Route("api/auth/changepassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto passwordDto)
         {
             var result = await AuthManager.ChangePasswordAsync(HttpContext.User.Identity.Name, passwordDto.CurrentPassword, passwordDto.NewPassword);
@@ -84,7 +83,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize]
-        [HttpGet, Route("rolesforuser")]
+        [HttpGet, Route("api/user/{id}/roles")]
         public async Task<IActionResult> GetRolesForUser()
         {
             var roles = await AuthManager.GetRolesForUserAsync(HttpContext.User.Identity.Name);
@@ -92,7 +91,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet, Route("listusers")]
+        [HttpGet, Route("api/users")]
         public async Task<IActionResult> ListUsers()
         {
             var users = await AuthManager.ListUsersAsync();
@@ -100,7 +99,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete, Route("deleteuser/{userid}")]
+        [HttpDelete, Route("api/user/{userid}")]
         public async Task<IActionResult> DeleteUser(string userid)
         {
             await AuthManager.DeleteUserAsync(userid);
@@ -108,18 +107,18 @@ namespace TodoApp.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPut, Route("edituser")]
+        [HttpPut, Route("api/user/{userid}")]
         public async Task<IActionResult> EditUser([FromBody] UserDto userData)
         {
             var result = await AuthManager.EditUserAsync(userData);
             return Ok(result);
         }
 
-        [HttpPost, Route("register")]
+        [HttpPost, Route("api/user")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
         {
             if (user == null)
-                return BadRequest("Request can't be completed. Internal server error.");
+                return BadRequest("Request can't be completed. No user to register.");
 
             var result = await AuthManager.AddUserAsync(user);
 
@@ -129,13 +128,10 @@ namespace TodoApp.Web.Controllers
                 return BadRequest(result.Errors.Select(e => e.Description).ToList());
         }
 
-        [HttpGet, Route("profilepicture/{username}")]
-        public async Task<IActionResult> GetProfilePicture(string username)
+        [HttpGet, Route("api/user/{userid}/profilepicture")]
+        public async Task<IActionResult> GetProfilePicture(string userid)
         {
-            if (string.IsNullOrWhiteSpace(username))
-                username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var picture = await AuthManager.GetProfilePicture(username);
+            var picture = await AuthManager.GetProfilePicture(userid);
             return File(picture, "image/jpeg");
         }
     }
