@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 import { Observable } from 'rxjs/internal/Observable';
 import { LoginResponse } from 'src/model/login-response';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
 
+@Directive()
 @Injectable({
   providedIn: 'root'
 })
