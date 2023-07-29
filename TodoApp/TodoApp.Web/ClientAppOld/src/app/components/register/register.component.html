@@ -1,0 +1,52 @@
+<div class="container col-sm-5">
+  <h2 class="h2-margin">Register</h2>
+  <h5 class="h5-margin"> Welcome to ToDolphin! </h5>
+  <form class="form-horizontal" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div *ngFor="let error of errors" class="alert alert-danger">
+      {{error}}
+    </div>
+
+    <div class="form-group row">
+      <label for="username" class="col-sm-3 col-form-label">Username</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="formData.username" required
+          autofocus>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="email" class="col-sm-3 col-form-label">Email</label>
+      <div class="col-sm-9">
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="password" class="col-sm-3 col-form-label">Password</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="formData.password"
+          required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm password</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+          [(ngModel)]="passwordConfirm" required>
+        <div *ngIf="passwordConfirm.length> 0 && passwordConfirm !== formData.password">
+          Passwords are not the same.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="picture" class="col-sm-3 col-form-label">Picture</label>
+      <div class="col-sm-9">
+        <input type="file" id="picture" name="picture" class="form-control" ngModel (change)="getFile($event)">
+        <label class="custom-file-label" for="picture">Choose file</label>
+      </div>
+    </div>
+    <button class="btn btn-primary float-right" type="submit">Register</button>
+  </form>
+</div>

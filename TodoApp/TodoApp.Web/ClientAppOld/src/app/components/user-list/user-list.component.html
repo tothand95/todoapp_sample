@@ -1,0 +1,35 @@
+<ng-template #addUserModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create a new user</h4>
+    </div>
+    <app-add-user [userToEdit]="selectedUser" (userCreatedEvent)="userCreated(); modal.close()" (cancelEvent)="modal.close()" class="m-3">
+    </app-add-user>
+</ng-template>
+
+<ng-template #showTodosModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Todos for {{selectedUser.userName}}</h4>
+    </div>
+    <app-todo-list [userId]="selectedUser.id" class="m-1"></app-todo-list>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
+    </div>
+</ng-template>
+
+<button class="btn btn-primary" (click)="showAddUserModal(addUserModal)">Add user</button>
+<div *ngFor="let user of users" class="row user-container">
+    <div class="user-item pointer-cursor col-4" (click)="showTodosForUserModal(showTodosModal, user)">
+        {{user.userName}} - {{user.email}}
+    </div>
+    <div class="col-2">
+        <button type="button" class="btn btn-secondary" (click)="editUser(addUserModal, user)">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="deleteUser(user)">
+            <i class="fa fa-trash"></i>
+        </button>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(27,107,145,0.8)" size="large" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

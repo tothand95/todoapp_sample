@@ -6,7 +6,7 @@ import { UserModel } from 'src/model/user-model';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent implements OnInit {
   @Output() userCreatedEvent: EventEmitter<boolean> = new EventEmitter();
@@ -27,7 +27,7 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  public addUser() {
+  addUser() {
     this.errors.length = 0;
 
     if (this.userToEdit) {
@@ -62,7 +62,7 @@ export class AddUserComponent implements OnInit {
 
   }
 
-  public cancel() {
+  cancel() {
     this.cancelEvent.emit(true);
   }
 }

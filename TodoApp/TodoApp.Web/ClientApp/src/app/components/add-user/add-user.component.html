@@ -2,7 +2,7 @@
   <div class="alert alert-info" role="alert" *ngIf="!userToEdit">
     Users created this way will have a default password. The default password is the username.
   </div>
-  <form class="form-horizontal" #addUserForm="ngForm" (ngSubmit)="addUser()">
+  <form class="form-horizontal">
     <div *ngFor="let error of errors" class="alert alert-danger">
       {{error}}
     </div>
@@ -10,15 +10,14 @@
     <div class="form-group row">
       <label for="username" class="col-sm-3 col-form-label">Username</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="formData.username"
-          [attr.disabled]="userToEdit ? '' : null" required autofocus>
+        <input type="text" class="form-control" id="username" name="username" [attr.disabled]="userToEdit ? '' : null" required autofocus>
       </div>
     </div>
 
     <div class="form-group row">
       <label for="email" class="col-sm-3 col-form-label">Email</label>
       <div class="col-sm-9">
-        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
+        <input type="email" class="form-control" id="email" name="email" required>
       </div>
     </div>
 

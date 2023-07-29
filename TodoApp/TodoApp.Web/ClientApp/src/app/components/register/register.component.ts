@@ -7,7 +7,7 @@ import { RegisterRequest } from 'src/model/register-request';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   formData: RegisterRequest;
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     this.errors = [];
   }
 
-  public register(form: NgForm) {
+  register(form: NgForm) {
     this.errors.length = 0;
     if (this.formData.password === this.passwordConfirm) {
       this.authService.register(this.formData)
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public getFile(event) {
+  getFile(event: any) {
     this.formData.picture = (event.target.files as FileList).item(0);
   }
 }

@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
-import { JwtHelper } from 'angular2-jwt';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { LoginResponse } from 'src/model/login-response';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
-@Directive()
 @Injectable({
   providedIn: 'root'
 })
@@ -14,9 +13,9 @@ export class AuthService {
   @Output() changeLoginStatus: EventEmitter<boolean> = new EventEmitter();
   @Output() changeUserRole: EventEmitter<string> = new EventEmitter();
 
-  constructor(private jwtHelper: JwtHelper, private http: HttpClient) { }
+  constructor(private jwtHelper: JwtHelperService, private http: HttpClient) { }
 
-  public login(credentialsJson: string): Observable<LoginResponse> {
+  login(credentialsJson: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>('/api/auth/login', credentialsJson, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -24,13 +23,13 @@ export class AuthService {
     });
   }
 
-  public getProfilePicture(userid: string): Observable<any> {
+  getProfilePicture(userid: string): Observable<any> {
     return this.http.get<any>('/api/user/' + userid + '/profilepicture', {
       responseType: 'blob' as 'json'
     });
   }
 
-  public logout() {
+  logout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
@@ -39,16 +38,16 @@ export class AuthService {
     this.emitLoginStatus();
   }
 
-  public register(requestData: RegisterRequest): Observable<void> {
+  register(requestData: RegisterRequest): Observable<void> {
     const formData = new FormData();
     for (const prop in requestData) {
       if (!requestData.hasOwnProperty(prop)) { continue; }
-      formData.append(prop, requestData[prop]);
+      // formData.append(prop, requestData[prop]);
     }
     return this.http.post<void>('/api/user', formData);
   }
 
-  public setUserRole() {
+  setUserRole() {
     const token = localStorage.getItem('jwt');
     if (this.isLoggedIn()) {
       this.http.get('/api/user/rolesforuser', {
@@ -65,7 +64,7 @@ export class AuthService {
     }
   }
 
-  public listUsers(): Observable<any> {
+  listUsers(): Observable<any> {
     const token = localStorage.getItem('jwt');
     return this.http.get<any>('api/users', {
       headers: new HttpHeaders({
@@ -75,7 +74,7 @@ export class AuthService {
     });
   }
 
-  public deleteUser(userid: string): Observable<any> {
+  deleteUser(userid: string): Observable<any> {
     const token = localStorage.getItem('jwt');
     return this.http.delete<any>('/api/user/' + userid, {
       headers: new HttpHeaders({
@@ -85,7 +84,7 @@ export class AuthService {
     });
   }
 
-  public editUser(userData: UserModel): Observable<boolean> {
+  editUser(userData: UserModel): Observable<boolean> {
     const token = localStorage.getItem('jwt');
     return this.http.put<boolean>('api/user/' + userData.id, JSON.stringify(userData), {
       headers: new HttpHeaders({
@@ -95,16 +94,16 @@ export class AuthService {
     });
   }
 
-  public isLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     const token = localStorage.getItem('jwt');
     return (token !== null && !this.jwtHelper.isTokenExpired(token));
   }
 
-  public emitLoginStatus() {
+  emitLoginStatus() {
     this.changeLoginStatus.emit(this.isLoggedIn());
   }
 
-  public emitUserRole() {
+  emitUserRole() {
     this.changeUserRole.emit(localStorage.getItem('role'));
   }
 }

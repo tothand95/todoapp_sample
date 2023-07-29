@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnChanges, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { TodoService } from 'src/app/services/todo.service';
 import { TodoModel } from 'src/model/todo-model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
   @Input() userId: string;
@@ -29,21 +29,16 @@ export class TodoListComponent implements OnInit {
     this.userId = localStorage.getItem('username');
   }
 
-  public showTodoModal(modalContent, todo: TodoModel) {
+  showTodoModal(modalContent: TemplateRef<any>, todo: TodoModel) {
     this.selectedTodo = todo;
     this.openModal(modalContent, 'lg');
   }
 
-  public todoCreated() {
+  todoCreated() {
     this.listTodosApiCall();
   }
-  private openModal(content, size: string) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
-    }, (reason) => {
-    });
-  }
 
-  public listTodosApiCall() {
+  listTodosApiCall() {
     this.todoService.listTodoForCurrentUser()
       .subscribe(response => {
         this.todos = response;
@@ -51,7 +46,7 @@ export class TodoListComponent implements OnInit {
       });
   }
 
-  public deleteTodo(todo: TodoModel) {
+  deleteTodo(todo: TodoModel) {
     if (confirm('Are you sure to delete ' + todo.id)) {
       this.todoService.deleteTodo(todo.id).subscribe(response => {
         alert('Todo deleted');
@@ -60,5 +55,13 @@ export class TodoListComponent implements OnInit {
         alert('Deleting user task failed.');
       });
     }
+  }
+
+  private openModal(content: TemplateRef<any>, size: string) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result
+      .then((result) => {
+      }, (reason) => {
+      });
   }
 }

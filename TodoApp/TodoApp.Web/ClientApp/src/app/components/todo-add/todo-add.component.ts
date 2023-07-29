@@ -8,7 +8,7 @@ import { TodoStatus } from 'src/model/todo-status';
 @Component({
   selector: 'app-todo-add',
   templateUrl: './todo-add.component.html',
-  styleUrls: ['./todo-add.component.css']
+  styleUrls: ['./todo-add.component.scss']
 })
 export class TodoAddComponent implements OnInit {
   @Output() todoCreatedEvent: EventEmitter<boolean> = new EventEmitter();
@@ -40,7 +40,7 @@ export class TodoAddComponent implements OnInit {
     }
   }
 
-  public addOrEditTodo() {
+  addOrEditTodo() {
     this.errors.length = 0;
 
     if (this.todoData.id) {
@@ -77,7 +77,7 @@ export class TodoAddComponent implements OnInit {
 
   }
 
-  public cancel() {
+  cancel() {
     this.cancelEvent.emit(true);
   }
 }
