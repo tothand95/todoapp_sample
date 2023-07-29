@@ -45,7 +45,7 @@ export class AuthService {
       if (!requestData.hasOwnProperty(prop)) { continue; }
       formData.append(prop, requestData[prop]);
     }
-    return this.http.post<void>('/api/user/register', formData);
+    return this.http.post<void>('/api/user', formData);
   }
 
   public setUserRole() {
