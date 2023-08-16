@@ -15,6 +15,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using TodoApp.Bll.Entities;
 using TodoApp.Web.Middlewares;
+using Microsoft.Extensions.Logging;
 
 namespace TodoApp.Web
 {
@@ -31,6 +32,7 @@ namespace TodoApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddLogging((builder) => builder.AddConsole());
 
             services.AddCors(options =>
             {
@@ -46,7 +48,6 @@ namespace TodoApp.Web
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<ITodoManager, TodoManager>();
             services.AddDbContext<TodoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
-
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -39,12 +39,7 @@ export class AuthService {
   }
 
   register(requestData: RegisterRequest): Observable<void> {
-    const formData = new FormData();
-    for (const prop in requestData) {
-      if (!requestData.hasOwnProperty(prop)) { continue; }
-      // formData.append(prop, requestData[prop]);
-    }
-    return this.http.post<void>('/api/user', formData);
+    return this.http.post<void>('/api/user', JSON.stringify(requestData));
   }
 
   setUserRole() {

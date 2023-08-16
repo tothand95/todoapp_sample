@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'oidc-client';
+import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
@@ -58,14 +59,14 @@ export class UserListComponent implements OnInit {
   }
 
   private listUsersApiCall() {
-    this.spinner.show();
+    // this.spinner.show();
     this.users = [];
     this.authService.listUsers()
-      .subscribe(response => {
-        this.users = response;
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
+      .pipe(finalize(() => { this.spinner.hide() }))
+      .subscribe({
+        next: response => {
+          this.users = response;
+        }
       });
   }
 

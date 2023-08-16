@@ -16,7 +16,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ProfileImageDirective } from './directives/profile-image.directive';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
@@ -50,6 +50,7 @@ export function tokenGetter() {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxSpinnerModule,
     NgbDatepickerModule,
     JwtModule.forRoot({

@@ -115,7 +115,7 @@ namespace TodoApp.Web.Controllers
         }
 
         [HttpPost, Route("api/user")]
-        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto user)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto user)
         {
             if (user == null)
                 return BadRequest("Request can't be completed. No user to register.");
