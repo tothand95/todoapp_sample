@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,30 +22,20 @@ namespace TodoApp.Web
 {
   public class Startup
   {
+    private IConfiguration Configuration { get; }
+    private static string CorsPolicyName => "EnableCORS";
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
 
-    public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllersWithViews();
-      services.AddLogging((builder) => builder.AddConsole());
-
-      // services.AddCors(options =>
-      // {
-      //   options.AddPolicy("EnableCORS", builder =>
-      //   {
-      //     builder.AllowAnyOrigin()
-      //       .AllowAnyHeader()
-      //       .AllowAnyMethod()
-      //       .AllowCredentials()
-      //       .Build();
-      //   });
-      // });
+      services.AddLogging(builder => builder.AddConsole());
       services.AddScoped<IAuthManager, AuthManager>();
       services.AddScoped<ITodoManager, TodoManager>();
       services.AddDbContext<TodoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
@@ -62,8 +53,8 @@ namespace TodoApp.Web
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey123123123")),
-            ValidIssuer = "http://localhost:44353",
-            ValidAudience = "http://localhost:44353"
+            ValidIssuer = "https://localhost:44353",
+            ValidAudience = "https://localhost:4200"
           };
         });
 
@@ -116,31 +107,36 @@ namespace TodoApp.Web
       //    app.UseHsts();
       //}
       app.UseMiddleware<ExceptionHandlingMiddleware>();
+      app.UseRouting();
 
       app.UseHttpsRedirection();
       app.UseStaticFiles();
+
       if (!env.IsDevelopment())
       {
         app.UseSpaStaticFiles();
       }
+      else
+      {
+        app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+      }
 
-      app.UseRouting();
+
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-      app.UseSpa(spa =>
-      {
-        // To learn more about options for serving an Angular SPA from ASP.NET Core,
-        // see https://go.microsoft.com/fwlink/?linkid=864501
-
-        spa.Options.SourcePath = "ClientApp";
-
-        if (env.IsDevelopment())
-        {
-          spa.UseAngularCliServer(npmScript: "start");
-        }
-      });
+      // app.UseSpa(spa =>
+      // {
+      //   // To learn more about options for serving an Angular SPA from ASP.NET Core,
+      //   // see https://go.microsoft.com/fwlink/?linkid=864501
+      //
+      //   spa.Options.SourcePath = "ClientApp";
+      //
+      //   if (env.IsDevelopment())
+      //   {
+      //     spa.UseAngularCliServer(npmScript: "start");
+      //   }
+      // });
     }
   }
 }

@@ -58,7 +58,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -67,10 +73,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "todoapp:build:production"
+              "browserTarget": "todoapp:build:production",
+              "ssl": true
             },
             "development": {
-              "browserTarget": "todoapp:build:development"
+              "browserTarget": "todoapp:build:development",
+              "ssl": true
             }
           },
           "defaultConfiguration": "development"
