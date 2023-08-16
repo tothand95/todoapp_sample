@@ -11,14 +11,14 @@ export class AuthGuard implements CanActivate {
 
   constructor(private jwtHelper: JwtHelperService, private router: Router, private authService: AuthService) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     const token = localStorage.getItem('jwt');
     this.authService.emitLoginStatus();
 
-    if (token && !this.jwtHelper.isTokenExpired(token)) { return true; }
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
 
     this.router.navigate(['login']);
     return false;

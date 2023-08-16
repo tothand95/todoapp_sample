@@ -112,13 +112,13 @@ namespace TodoApp.Web
       app.UseHttpsRedirection();
       app.UseStaticFiles();
 
-      if (!env.IsDevelopment())
+      if (env.IsDevelopment())
       {
-        app.UseSpaStaticFiles();
+        app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
       }
       else
       {
-        app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+        app.UseSpaStaticFiles();
       }
 
 

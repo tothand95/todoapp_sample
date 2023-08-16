@@ -61,7 +61,7 @@ export class AuthService {
 
   listUsers(): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.get<any>(this.getServiceUrl() + 'api/users', {
+    return this.http.get<any>(this.getServiceUrl() + '/api/users', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ export class AuthService {
 
   editUser(userData: UserModel): Observable<boolean> {
     const token = localStorage.getItem('jwt');
-    return this.http.put<boolean>(this.getServiceUrl() + 'api/user/' + userData.id, JSON.stringify(userData), {
+    return this.http.put<boolean>(this.getServiceUrl() + '/api/user/' + userData.id, JSON.stringify(userData), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
