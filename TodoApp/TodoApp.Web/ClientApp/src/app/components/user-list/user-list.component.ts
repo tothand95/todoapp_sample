@@ -1,7 +1,4 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'oidc-client';
 import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
@@ -17,7 +14,7 @@ export class UserListComponent implements OnInit {
   newUser: RegisterRequest;
   selectedUser: UserModel;
 
-  constructor(private authService: AuthService, private modalService: NgbModal, private spinner: NgxSpinnerService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.listUsersApiCall();
@@ -53,16 +50,13 @@ export class UserListComponent implements OnInit {
   }
 
   private openModal(content: TemplateRef<any>, size: string) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
-    }, (reason) => {
-    });
   }
 
   private listUsersApiCall() {
     // this.spinner.show();
     this.users = [];
     this.authService.listUsers()
-      .pipe(finalize(() => { this.spinner.hide() }))
+      .pipe(finalize(() => { /* loading off */ }))
       .subscribe({
         next: response => {
           this.users = response;

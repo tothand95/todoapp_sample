@@ -14,12 +14,11 @@ import { TodoCardComponent } from './components/todo-card/todo-card.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ProfileImageDirective } from './directives/profile-image.directive';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
-import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpErrorInterceptor } from './extensions/http-error.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -42,7 +41,6 @@ export function tokenGetter() {
     UserListComponent,
     AddUserComponent,
     ProfileImageDirective
-
   ],
   imports: [
     BrowserModule,
@@ -50,19 +48,17 @@ export function tokenGetter() {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxSpinnerModule,
-    NgbDatepickerModule,
+    ReactiveFormsModule,    
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ["example.com"],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
+        tokenGetter: tokenGetter
       },
     })
   ],
   providers: [
-    { provide: APP_ID, useValue: 'ng-cli-universal' }
+    { provide: APP_ID, useValue: 'ng-cli-universal' },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

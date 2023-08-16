@@ -33,7 +33,6 @@ export class AuthService {
     localStorage.removeItem('jwt');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
-    localStorage.removeItem('userid');
 
     this.emitLoginStatus();
   }

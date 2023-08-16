@@ -35,7 +35,7 @@ export class TodoService {
 
   listTodoForCurrentUser(): Observable<any> {
     const token = localStorage.getItem('jwt');
-    const userid = localStorage.getItem('userid');
+    const userid = localStorage.getItem('username');
     return this.http.get<any>('/api/user/' + userid + '/todos', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
