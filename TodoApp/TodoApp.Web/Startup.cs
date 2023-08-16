@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using TodoApp.Bll.Entities;
 using TodoApp.Web.Middlewares;
 using Microsoft.Extensions.Logging;
+using TodoApp.Bll.Managers.Interfaces;
 
 namespace TodoApp.Web
 {

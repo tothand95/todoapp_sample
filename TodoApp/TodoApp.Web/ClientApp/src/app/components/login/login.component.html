@@ -6,19 +6,28 @@
       {{error}}
     </div>
 
-    <div class="form-group row">
+    <!-- <div class="form-group row">
       <label for="username" class="col-sm-3 col-form-label">Username</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" formControlName="username" name="username" required autofocus>
       </div>
-    </div>
+    </div> -->
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput type="text" class="form-control" formControlName="username" name="username" autofocus>
+    </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" class="form-control" formControlName="password" name="password">
+    </mat-form-field>
+    <!-- 
     <div class="form-group row">
       <label for="password" class="col-sm-3 col-form-label">Password</label>
       <div class="col-sm-9">
         <input type="password" class="form-control" formControlName="password" name="password" required>
       </div>
-    </div>
+    </div> -->
 
     <button class="btn btn-primary" type="submit">Sign in</button>
   </form>

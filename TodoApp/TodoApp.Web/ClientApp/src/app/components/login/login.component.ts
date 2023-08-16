@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl<string>(''),
-      password: new FormControl<string>('')
+      username: new FormControl<string>('', Validators.required),
+      password: new FormControl<string>('', Validators.required)
     });
   }
 

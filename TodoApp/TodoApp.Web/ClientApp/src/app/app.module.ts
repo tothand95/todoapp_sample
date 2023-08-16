@@ -1,5 +1,9 @@
 import { APP_ID, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatButtonModule } from '@angular/material/button'
+import { MatInputModule } from '@angular/material/input'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,10 +49,14 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     HttpClientModule,
+    AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatInputModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
