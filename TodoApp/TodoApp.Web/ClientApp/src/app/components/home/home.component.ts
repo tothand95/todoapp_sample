@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  constructor(private spinner: NgxSpinnerService, private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {

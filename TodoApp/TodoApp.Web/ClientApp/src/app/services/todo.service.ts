@@ -10,9 +10,9 @@ export class TodoService {
 
   constructor(private http: HttpClient) { }
 
-  public getTodo(id: number): Observable<any> {
+  getTodo(id: number): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.get<any>('/api/todo/getfromid/' + id, {
+    return this.http.get<any>('/api/todo/' + id, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -20,12 +20,12 @@ export class TodoService {
     });
   }
 
-  public listTodoForUser(userid: string, includeArchieved: boolean): Observable<any> {
+  listTodoForUser(userid: string, includeArchieved: boolean): Observable<any> {
     const token = localStorage.getItem('jwt');
     let params = new HttpParams();
     params = params.append('includeArchieved', includeArchieved ? 'true' : 'false');
 
-    return this.http.get<any>('/api/todo/getfromuserid/' + userid, {
+    return this.http.get<any>('/user/' + userid + '/todos', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -33,9 +33,10 @@ export class TodoService {
     });
   }
 
-  public listTodoForCurrentUser(): Observable<any> {
+  listTodoForCurrentUser(): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.get<any>('/api/todo/getforcurrentuser', {
+    const userid = localStorage.getItem('username');
+    return this.http.get<any>('/api/user/' + userid + '/todos', {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -43,9 +44,9 @@ export class TodoService {
     });
   }
 
-  public deleteTodo(id: number): Observable<any> {
+  deleteTodo(id: number): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.delete<any>('/api/todo/delete/' + id, {
+    return this.http.delete<any>('/api/todo/' + id, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -53,9 +54,9 @@ export class TodoService {
     });
   }
 
-  public createTodo(dto: TodoModel): Observable<any> {
+  createTodo(dto: TodoModel): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.post<any>('/api/todo/create', JSON.stringify(dto), {
+    return this.http.post<any>('/api/todo', JSON.stringify(dto), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -63,9 +64,9 @@ export class TodoService {
     });
   }
 
-  public editTodo(dto: TodoModel): Observable<any> {
+  editTodo(dto: TodoModel): Observable<any> {
     const token = localStorage.getItem('jwt');
-    return this.http.put<any>('/api/todo/edit', JSON.stringify(dto), {
+    return this.http.put<any>('/api/todo/' + dto.id, JSON.stringify(dto), {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

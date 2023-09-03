@@ -1,5 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { TodoService } from 'src/app/services/todo.service';
 import { TodoModel } from 'src/model/todo-model';
@@ -7,21 +6,21 @@ import { TodoModel } from 'src/model/todo-model';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
   @Input() userId: string;
   todos: TodoModel[] = [];
   selectedTodo: TodoModel;
 
-  constructor(private todoService: TodoService, private authService: AuthService, private modalService: NgbModal) { }
+  constructor(private todoService: TodoService, private authService: AuthService) { }
 
   ngOnInit() {
+    console.log('user id: ' + this.userId)
     if (this.userId) {
       this.todoService.listTodoForUser(this.userId, false)
         .subscribe(response => {
           this.todos = response;
-        }, err => {
         });
     } else {
       this.listTodosApiCall();
@@ -29,21 +28,16 @@ export class TodoListComponent implements OnInit {
     this.userId = localStorage.getItem('username');
   }
 
-  public showTodoModal(modalContent, todo: TodoModel) {
+  showTodoModal(modalContent: TemplateRef<any>, todo: TodoModel) {
     this.selectedTodo = todo;
     this.openModal(modalContent, 'lg');
   }
 
-  public todoCreated() {
+  todoCreated() {
     this.listTodosApiCall();
   }
-  private openModal(content, size: string) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
-    }, (reason) => {
-    });
-  }
 
-  public listTodosApiCall() {
+  listTodosApiCall() {
     this.todoService.listTodoForCurrentUser()
       .subscribe(response => {
         this.todos = response;
@@ -51,7 +45,7 @@ export class TodoListComponent implements OnInit {
       });
   }
 
-  public deleteTodo(todo: TodoModel) {
+  deleteTodo(todo: TodoModel) {
     if (confirm('Are you sure to delete ' + todo.id)) {
       this.todoService.deleteTodo(todo.id).subscribe(response => {
         alert('Todo deleted');
@@ -60,5 +54,9 @@ export class TodoListComponent implements OnInit {
         alert('Deleting user task failed.');
       });
     }
+  }
+
+  private openModal(content: TemplateRef<any>, size: string) {
+   
   }
 }

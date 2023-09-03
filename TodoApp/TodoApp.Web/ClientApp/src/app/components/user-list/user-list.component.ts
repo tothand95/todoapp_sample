@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'oidc-client';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequest } from 'src/model/register-request';
 import { UserModel } from 'src/model/user-model';
@@ -9,34 +7,34 @@ import { UserModel } from 'src/model/user-model';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
   users: UserModel[];
   newUser: RegisterRequest;
   selectedUser: UserModel;
 
-  constructor(private authService: AuthService, private modalService: NgbModal, private spinner: NgxSpinnerService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.listUsersApiCall();
   }
 
-  public showTodosForUserModal(modalContent, user: UserModel) {
+  showTodosForUserModal(modalContent: TemplateRef<any>, user: UserModel) {
     this.selectedUser = user;
     this.openModal(modalContent, 'xl');
   }
 
-  public showAddUserModal(modalContent) {
+  showAddUserModal(modalContent: TemplateRef<any>) {
     this.selectedUser = null;
     this.openModal(modalContent, 'md');
   }
 
-  public userCreated() {
+  userCreated() {
     this.listUsersApiCall();
   }
 
-  public deleteUser(user: UserModel) {
+  deleteUser(user: UserModel) {
     if (confirm('Are you sure to delete ' + user.userName)) {
       this.authService.deleteUser(user.id).subscribe(response => {
         this.listUsersApiCall();
@@ -46,26 +44,23 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  public editUser(modalContent, user: UserModel) {
+  editUser(modalContent: TemplateRef<any>, user: UserModel) {
     this.selectedUser = user;
     this.openModal(modalContent, 'md');
   }
 
-  private openModal(content, size: string) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: size }).result.then((result) => {
-    }, (reason) => {
-    });
+  private openModal(content: TemplateRef<any>, size: string) {
   }
 
   private listUsersApiCall() {
-    this.spinner.show();
+    // this.spinner.show();
     this.users = [];
     this.authService.listUsers()
-      .subscribe(response => {
-        this.users = response;
-        this.spinner.hide();
-      }, err => {
-        this.spinner.hide();
+      .pipe(finalize(() => { /* loading off */ }))
+      .subscribe({
+        next: response => {
+          this.users = response;
+        }
       });
   }
 

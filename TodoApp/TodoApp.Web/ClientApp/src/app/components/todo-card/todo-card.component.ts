@@ -5,7 +5,7 @@ import { TodoModel } from 'src/model/todo-model';
 @Component({
   selector: 'app-todo-card',
   templateUrl: './todo-card.component.html',
-  styleUrls: ['./todo-card.component.css']
+  styleUrls: ['./todo-card.component.scss']
 })
 export class TodoCardComponent implements OnInit {
   @Input() model: TodoModel;

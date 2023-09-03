@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using TodoApp.Bll.Dtos;
 using TodoApp.Bll.Entities;
 using TodoApp.Common.Enums;
 
-namespace TodoApp.Bll.Managers
+namespace TodoApp.Bll.Managers.Interfaces
 {
     public interface ITodoManager
     {
