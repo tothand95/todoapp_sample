@@ -1,73 +1,35 @@
-import { APP_ID, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatButtonModule } from '@angular/material/button'
-import { MatInputModule } from '@angular/material/input'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { RegisterComponent } from './components/register/register.component';
-import { TodoAddComponent } from './components/todo-add/todo-add.component';
-import { TodoCardComponent } from './components/todo-card/todo-card.component';
-import { TodoListComponent } from './components/todo-list/todo-list.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-import { ProfileImageDirective } from './directives/profile-image.directive';
-import { JwtModule } from '@auth0/angular-jwt';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpErrorInterceptor } from './extensions/http-error.interceptor';
+import { HomeComponent } from "./components/home/home.component";
+import { JwtModule } from "@auth0/angular-jwt";
+import {
+  HttpClientModule
+} from "@angular/common/http";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
 }
-
 @NgModule({
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
-    ChangePasswordComponent,
-    TodoListComponent,
-    TodoAddComponent,
-    TodoCardComponent,
-    UserListComponent,
-    AddUserComponent,
-    ProfileImageDirective
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatButtonModule,
-    MatInputModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
       },
     })
   ],
-  providers: [
-    { provide: APP_ID, useValue: 'ng-cli-universal' },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
