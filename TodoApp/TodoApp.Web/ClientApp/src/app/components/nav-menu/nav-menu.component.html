@@ -1,0 +1,12 @@
+<header>
+  <a class="page-title-button" *ngIf="!isLoggedIn" tabindex="0" (click)="navigateTo('/')">ToDolphin</a>
+  <a class="page-title-button" *ngIf="isLoggedIn" tabindex="0" (click)="navigateTo('todos')">ToDolphin</a>
+
+  <div class="menu-bar-container">
+    <button class="menu-point" *ngIf="isLoggedIn" tabindex="1" (click)="navigateTo('todos')">{{ 'To do list' | uppercase}}</button>
+    <button class="menu-point" *ngIf="isLoggedIn" tabindex="2" (click)="navigateTo('users')">{{ 'Users' | uppercase}}</button>
+    <button class="menu-point" *ngIf="!isLoggedIn" tabindex="3" (click)="navigateTo('register')">{{ 'Register' | uppercase}}</button>
+    <button class="menu-point" *ngIf="!isLoggedIn" tabindex="4" (click)="navigateTo('login')">{{ 'Login' | uppercase}}</button>
+    <button class="menu-point" *ngIf="isLoggedIn" tabindex="3" (click)="logout()">{{ 'Log out' | uppercase}}</button>
+  </div>
+</header>
